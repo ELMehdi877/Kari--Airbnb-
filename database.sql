@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS users(
     fullname VARCHAR(20) NOT NULL,
     role VARCHAR(20) NOT NULL,
     email VARCHAR(20) UNIQUE NOT NULL,
-    statut BOOLEAN,
     password VARCHAR(250) NOT NULL
+    statut BOOLEAN,
 )
 
 #Table logements
