@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeStay | L'Exception</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Plus+Jakarta+Sans:wght@200;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #c2a371; /* Or sourd / Champagne */
+        }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #000; /* Fond noir pour l'élégance */
+            color: white;
+            overflow-x: hidden;
+        }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+
+        /* ANIMATION D'OUVERTURE DE L'IMAGE (THE REVEAL) */
+        @keyframes headerOpening {
+            0% { 
+                clip-path: inset(20% 30% 20% 30% round 2rem); 
+                transform: scale(1.2);
+                filter: blur(10px);
+            }
+            100% { 
+                clip-path: inset(0% 0% 0% 0% round 0); 
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes textUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero-image-container {
+            animation: headerOpening 2.5s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+        }
+
+        .reveal-text {
+            opacity: 0;
+            animation: textUp 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+            animation-delay: 1.5s;
+        }
+
+        /* Verre dépoli */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Curseur personnalisé (optionnel) */
+        .custom-cursor {
+            mix-blend-mode: difference;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="no-scrollbar">
+
+    <!-- NAVIGATION OVERLAY -->
+    <nav class="fixed top-0 w-full z-[100] px-10 py-8 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl font-extralight tracking-[0.4em] uppercase">LuxeStay</span>
+        </div>
+
+        <!-- Menu Desktop -->
+        <div class="hidden lg:flex gap-12 text-[10px] uppercase tracking-[0.3em] font-bold text-white/60">
+            <a href="#" class="hover:text-white transition">Collection</a>
+            <a href="#" class="hover:text-white transition">Héritage</a>
+            <a href="#" class="hover:text-white transition">Conciergerie</a>
+        </div>
+
+        <div class="flex items-center gap-8">
+            <a href="login.html" class="hidden md:block text-[10px] uppercase tracking-[0.2em] font-bold">Mon Compte</a>
+            <button onclick="openMenu()" class="w-10 h-10 flex flex-col justify-center items-end gap-1.5 group">
+                <div class="w-8 h-[1px] bg-white group-hover:w-10 transition-all"></div>
+                <div class="w-5 h-[1px] bg-white group-hover:w-10 transition-all"></div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU SIDEBAR -->
+    <div id="mobileMenu" class="fixed inset-0 z-[200] bg-black translate-x-full transition-transform duration-700 ease-in-out px-10 py-20">
+        <button onclick="closeMenu()" class="absolute top-10 right-10 text-4xl font-light">&times;</button>
+        <div class="space-y-10">
+            <p class="text-white/30 text-xs uppercase tracking-widest">Navigation</p>
+            <a href="index.html" class="block serif text-6xl hover:italic transition-all">Exploration</a>
+            <a href="login.html" class="block serif text-6xl hover:italic transition-all">Connexion</a>
+            <a href="signup.html" class="block serif text-6xl hover:italic transition-all">Rejoindre</a>
+            <hr class="border-white/10">
+            <a href="#" class="block text-sm uppercase tracking-widest text-white/50">Devenir Hôte</a>
+            <a href="#" class="block text-sm uppercase tracking-widest text-white/50">Administration</a>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <!-- L'image qui s'ouvre -->
+        <div class="absolute inset-0 z-0 hero-image-container">
+            <div class="absolute inset-0 bg-black/40 z-10"></div> <!-- Overlay pour le contraste -->
+            <img src="https://images.unsplash.com/photo-1600607687940-4e524cb350b1?auto=format&fit=crop&q=80&w=2070" 
+                 class="w-full h-full object-cover grayscale-[20%]" alt="Luxury Villa">
+        </div>
+
+        <div class="relative z-20 text-center px-6">
+            <div class="reveal-text">
+                <span class="inline-block text-[10px] uppercase tracking-[0.6em] mb-6 opacity-70">The Art of Escape</span>
+                <h1 class="serif text-7xl md:text-9xl font-light leading-none mb-10">
+                    L'Excellence <br> <span class="italic font-extralight">Redéfinie.</span>
+                </h1>
+                <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                    <button class="px-12 py-5 bg-white text-black rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-transparent hover:text-white border border-white transition-all duration-500">
+                        Découvrir la Collection
+                    </button>
+                    <a href="signup.html" class="text-[10px] uppercase tracking-widest font-bold border-b border-white/30 pb-2 hover:border-white transition">
+                        Créer une invitation
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indicateur de scroll minimaliste -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 overflow-hidden h-20">
+            <div class="w-[1px] h-full bg-gradient-to-b from-white to-transparent animate-[scrollLine_2s_infinite]"></div>
+        </div>
+    </section>
+
+    <!-- SECTION DE TRANSITION (CONTENU) -->
+    <section class="bg-white text-black py-32 px-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="space-y-10">
+                    <h2 class="serif text-6xl leading-tight">Trois interfaces. <br> Une seule exigence.</h2>
+                    <p class="text-gray-500 text-lg leading-relaxed font-light">
+                        Nous avons conçu LuxeStay pour être plus qu'une plateforme. C'est un outil de précision pour les voyageurs du monde, une vitrine pour les hôtes d'exception et un centre de contrôle pour les administrateurs.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10">
+                        <div class="group cursor-pointer">
+                            <p class="text-[10px] font-bold uppercase tracking-widest mb-4 opacity-40">01</p>
+                            <h4 class="serif text-2xl group-hover:italic transition-all">Voyageur</h4>
+                        </div>
+                        <div class="group cursor-pointer">
+                            <p class="text-[10px] font-bold uppercase tracking-widest mb-4 opacity-40">02</p>
+                            <h4 class="serif text-2xl group-hover:italic transition-all">Hôte</h4>
+                        </div>
+                        <div class="group cursor-pointer">
+                            <p class="text-[10px] font-bold uppercase tracking-widest mb-4 opacity-40">03</p>
+                            <h4 class="serif text-2xl group-hover:italic transition-all">Admin</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative rounded-2xl overflow-hidden aspect-[4/5] shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER LUXE -->
+    <footer class="bg-[#0a0a0a] text-white pt-32 pb-10 px-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-32">
+                <div class="md:col-span-2 space-y-8">
+                    <span class="text-3xl font-extralight tracking-widest uppercase">LuxeStay</span>
+                    <p class="text-white/40 max-w-sm text-sm leading-relaxed">
+                        Chaque demeure est vérifiée, chaque service est personnalisé. LuxeStay redéfinit les standards de l'hospitalité numérique.
+                    </p>
+                </div>
+                <div class="space-y-6">
+                    <h5 class="text-[10px] uppercase tracking-[0.3em] text-white/30">Navigation</h5>
+                    <ul class="space-y-4 text-sm font-light">
+                        <li><a href="#" class="hover:text-white transition">Hôtels</a></li>
+                        <li><a href="#" class="hover:text-white transition">Villas Privées</a></li>
+                        <li><a href="#" class="hover:text-white transition">Expériences</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-6">
+                    <h5 class="text-[10px] uppercase tracking-[0.3em] text-white/30">Nous suivre</h5>
+                    <div class="flex gap-6 text-xl">
+                        <i class="fa-brands fa-instagram hover:text-white transition cursor-pointer"></i>
+                        <i class="fa-brands fa-linkedin-in hover:text-white transition cursor-pointer"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-10 gap-6">
+                <p class="text-[10px] uppercase tracking-widest text-white/20">&copy; 2026 LuxeStay International</p>
+                <div class="flex gap-8 text-[10px] uppercase tracking-widest text-white/20">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openMenu() {
+            document.getElementById('mobileMenu').classList.remove('translate-x-full');
+        }
+
+        function closeMenu() {
+            document.getElementById('mobileMenu').classList.add('translate-x-full');
+        }
+
+        // Animation scroll navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(0,0,0,0.8)';
+                nav.style.paddingTop = '1.5rem';
+                nav.style.paddingBottom = '1.5rem';
+                nav.style.backdropFilter = 'blur(10px)';
+            } else {
+                nav.style.background = 'transparent';
+                nav.style.paddingTop = '2rem';
+                nav.style.paddingBottom = '2rem';
+                nav.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+
+    <style>
+        @keyframes scrollLine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
+</body>
+</html>

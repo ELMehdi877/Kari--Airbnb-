@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeStay | L'Exception</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --accent: #e11d48; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #000; color: white; overflow-x: hidden; }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+
+        /* --- ANIMATIONS --- */
+        
+        /* Ouverture Image au refresh */
+        @keyframes heroReveal {
+            from { clip-path: inset(0 50% 0 50%); transform: scale(1.2); }
+            to { clip-path: inset(0 0 0 0); transform: scale(1); }
+        }
+        .animate-reveal { animation: heroReveal 2.2s cubic-bezier(0.77, 0, 0.175, 1) forwards; }
+
+        /* Menu Mobile : Staggered Panels */
+        .menu-panel { transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1); }
+        .menu-open .panel-1 { transform: translateY(0); }
+        .menu-open .panel-2 { transform: translateY(0); transition-delay: 0.1s; }
+        
+        @keyframes linkFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .menu-open .nav-link { animation: linkFade 0.8s ease forwards; }
+
+        /* Hover dynamique : le fond reste visible */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent);
+            transform: translateY(-10px);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- NAV BAR -->
+    <nav class="fixed top-0 w-full z-[120] px-8 py-6 flex justify-between items-center transition-all duration-700" id="navbar">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-rose-600 rounded-full flex items-center justify-center text-white shadow-2xl">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+            <span class="text-2xl font-bold tracking-tighter text-white">LUXESTAY</span>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-12 text-[10px] font-bold uppercase tracking-[0.3em]">
+            <a href="#" class="hover:text-rose-500 transition">Destinations</a>
+            <a href="#" class="hover:text-rose-500 transition">Expériences</a>
+            <a href="#" class="hover:text-rose-500 transition">Conciergerie</a>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <a href="#" class="hidden md:block text-[10px] font-bold uppercase tracking-widest border-b border-white/20 pb-1 hover:border-rose-500 transition">Connexion</a>
+            <button onclick="toggleMenu()" class="w-12 h-12 flex flex-col items-center justify-center gap-1.5 group">
+                <div class="w-6 h-0.5 bg-white group-hover:w-8 transition-all"></div>
+                <div class="w-8 h-0.5 bg-rose-600"></div>
+                <div class="w-6 h-0.5 bg-white group-hover:w-8 transition-all"></div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SUPER MOBILE MENU (RIDEAUX) -->
+    <div id="menuContainer" class="fixed inset-0 z-[150] pointer-events-none">
+        <div class="panel-1 menu-panel absolute inset-0 bg-rose-600 translate-y-[-100%]"></div>
+        <div class="panel-2 menu-panel absolute inset-0 bg-white translate-y-[-100%] p-10 flex flex-col justify-center items-center text-black pointer-events-auto">
+            <button onclick="toggleMenu()" class="absolute top-10 right-10 text-4xl">&times;</button>
+            <div class="space-y-8 text-center">
+                <div class="nav-link opacity-0" style="animation-delay: 0.4s"><a href="#" class="serif italic text-6xl hover:text-rose-600 transition">Voyager</a></div>
+                <div class="nav-link opacity-0" style="animation-delay: 0.5s"><a href="#" class="serif italic text-6xl hover:text-rose-600 transition">Héberger</a></div>
+                <div class="nav-link opacity-0" style="animation-delay: 0.6s"><a href="#" class="serif italic text-6xl hover:text-rose-600 transition">L'Exception</a></div>
+                <div class="nav-link opacity-0" style="animation-delay: 0.7s"><a href="#" class="serif italic text-6xl hover:text-rose-600 transition">Admin</a></div>
+            </div>
+            <div class="mt-20 flex gap-8">
+                 <i class="fa-brands fa-instagram text-2xl"></i>
+                 <i class="fa-brands fa-x-twitter text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="relative h-screen w-full flex items-center justify-center">
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6199f7d009?auto=format&fit=crop&q=80&w=2070" 
+                 class="w-full h-full object-cover opacity-70 animate-reveal">
+        </div>
+        <div class="relative z-10 text-center space-y-6">
+            <h1 class="serif text-7xl md:text-9xl text-white leading-none">
+                L'Inoubliable <br> <i class="font-light text-rose-500 italic">sur mesure.</i>
+            </h1>
+            <p class="text-white/60 tracking-[0.4em] uppercase text-[10px]">Réservé aux esprits libres</p>
+        </div>
+    </header>
+
+    <!-- SECTION VOYAGEUR & HOTE (SPLIT-DESIGN) -->
+    <section class="relative min-h-screen grid lg:grid-cols-2">
+        <!-- Côté Voyageur -->
+        <div class="relative group overflow-hidden flex items-end p-12 min-h-[500px]">
+            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=1000" 
+                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+            
+            <div class="relative z-10 glass-card p-10 rounded-3xl w-full">
+                <span class="text-rose-500 font-bold uppercase tracking-widest text-xs">Vivre l'instant</span>
+                <h2 class="serif text-5xl text-white my-4">Voyageur Privé</h2>
+                <p class="text-white/70 mb-8 max-w-sm">Accédez à une collection de villas invisibles du grand public, avec majordome dédié.</p>
+                <button class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-rose-600 hover:text-white transition-all">Explorer la collection</button>
+            </div>
+        </div>
+
+        <!-- Côté Hôte -->
+        <div class="relative group overflow-hidden flex items-end p-12 min-h-[500px]">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1000" 
+                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/20 to-transparent"></div>
+            
+            <div class="relative z-10 glass-card p-10 rounded-3xl w-full">
+                <span class="text-rose-500 font-bold uppercase tracking-widest text-xs">Valoriser votre bien</span>
+                <h2 class="serif text-5xl text-white my-4">Hôte d'Exception</h2>
+                <p class="text-white/70 mb-8 max-w-sm">Transformez votre propriété en une destination de luxe et optimisez vos revenus sereinement.</p>
+                <button class="px-8 py-4 border border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-all">Devenir Partenaire</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (ANTHRACITE PROFOND) -->
+    <footer class="bg-[#0a0a0a] pt-24 pb-12 px-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-2">
+                    <h3 class="serif text-4xl mb-6">LUXESTAY</h3>
+                    <p class="text-white/40 max-w-sm leading-relaxed italic">"Le luxe ne réside pas dans les choses, mais dans l'émotion qu'elles procurent."</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold text-rose-600 mb-8">Navigation</h4>
+                    <ul class="space-y-4 text-white/60 text-sm">
+                        <li class="hover:text-white cursor-pointer transition">Destinations secrètes</li>
+                        <li class="hover:text-white cursor-pointer transition">Héritage</li>
+                        <li class="hover:text-white cursor-pointer transition">Conciergerie</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold text-rose-600 mb-8">Contact</h4>
+                    <ul class="space-y-4 text-white/60 text-sm">
+                        <li>Paris · Avenue Montaigne</li>
+                        <li>contact@luxestay.com</li>
+                        <li>+33 1 45 67 89 00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:row justify-between items-center pt-10 border-t border-white/5 gap-6">
+                <div class="flex gap-10 text-[10px] font-bold text-white/20 uppercase tracking-widest">
+                    <a href="#" class="hover:text-white transition">Privatisation</a>
+                    <a href="#" class="hover:text-white transition">Presse</a>
+                    <a href="#" class="hover:text-white transition">Légal</a>
+                </div>
+                <p class="text-[10px] text-white/20">© 2026 LUXESTAY — CREATED FOR THE ELITE.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle Menu Mobile avec animation Rideau
+        function toggleMenu() {
+            document.body.classList.toggle('menu-open');
+            const container = document.getElementById('menuContainer');
+            if(document.body.classList.contains('menu-open')) {
+                container.classList.remove('pointer-events-none');
+            } else {
+                setTimeout(() => {
+                    container.classList.add('pointer-events-none');
+                }, 800);
+            }
+        }
+
+        // Navbar blur on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.background = "rgba(0,0,0,0.8)";
+                nav.style.backdropFilter = "blur(15px)";
+                nav.style.padding = "1rem 2rem";
+            } else {
+                nav.style.background = "transparent";
+                nav.style.backdropFilter = "none";
+                nav.style.padding = "1.5rem 2rem";
+            }
+        });
+    </script>
+</body>
+</html>

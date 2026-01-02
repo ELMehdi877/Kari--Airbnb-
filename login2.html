@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeStay | Connexion Privée</title>
+    
+    <!-- Scripts & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --accent: #e11d48; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #050505; 
+            margin: 0; 
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+        }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+
+        /* --- ANIMATION D'OUVERTURE --- */
+        @keyframes revealImage {
+            0% { clip-path: inset(0 50% 0 50%); transform: scale(1.2); opacity: 0; }
+            100% { clip-path: inset(0 0 0 0); transform: scale(1); opacity: 1; }
+        }
+
+        .img-reveal {
+            animation: revealImage 2.2s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+        }
+
+        /* --- CARTE EN VERRE --- */
+        .glass-auth {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- INPUTS --- */
+        input {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            border-color: var(--accent) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            outline: none;
+        }
+
+        /* --- BOUTON --- */
+        .btn-luxe {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-luxe::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 0;
+            background: var(--accent);
+            transition: all 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+            z-index: -1;
+        }
+        .btn-luxe:hover::after { height: 100%; }
+    </style>
+</head>
+<body>
+
+    <!-- IMAGE DE FOND AVEC REVEAL -->
+    <div class="absolute inset-0 z-0">
+        <!-- Image de villa de luxe stable -->
+        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=2070" 
+             class="w-full h-full object-cover img-reveal" 
+             alt="Luxury Villa">
+        <!-- Overlay sombre pour la lisibilité -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black"></div>
+    </div>
+
+    <!-- NAVIGATION / LOGO -->
+    <nav class="fixed top-0 w-full z-50 px-10 py-8 flex justify-between items-center">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.history.back()">
+            <div class="w-10 h-10 bg-rose-600 rounded-full flex items-center justify-center text-white shadow-2xl">
+                <i class="fa-solid fa-crown text-xs"></i>
+            </div>
+            <span class="text-2xl font-bold tracking-tighter uppercase text-white">LuxeStay</span>
+        </div>
+        <a href="index.html" class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 hover:text-white transition">Retour</a>
+    </nav>
+
+    <!-- FORMULAIRE -->
+    <main class="relative z-10 w-full max-w-[460px] px-6">
+        <div class="glass-auth p-10 md:p-14 rounded-[3rem]">
+            
+            <div class="text-center mb-12">
+                <h1 class="serif text-5xl mb-3 italic">Bienvenue.</h1>
+                <p class="text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold">Accès membre exclusif</p>
+            </div>
+
+            <form class="space-y-6">
+                <div class="space-y-2">
+                    <label class="block text-[10px] uppercase tracking-widest text-white/50 font-bold ml-1">Email</label>
+                    <input type="email" placeholder="votre@email.com" class="w-full p-4 rounded-xl text-sm">
+                </div>
+
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center px-1">
+                        <label class="block text-[10px] uppercase tracking-widest text-white/50 font-bold">Mot de passe</label>
+                        <a href="#" class="text-[9px] uppercase tracking-widest text-rose-500 font-bold">Oublié ?</a>
+                    </div>
+                    <input type="password" placeholder="••••••••••••" class="w-full p-4 rounded-xl text-sm">
+                </div>
+
+                <button type="submit" class="w-full py-5 bg-white text-black font-bold rounded-xl text-[10px] uppercase tracking-[0.3em] btn-luxe shadow-xl mt-4">
+                    Se Connecter
+                </button>
+            </form>
+
+            <div class="mt-12 pt-8 border-t border-white/5 text-center">
+                <p class="text-[11px] text-white/40 mb-6 uppercase tracking-widest">Ou continuer avec</p>
+                <div class="flex justify-center gap-10 mb-8">
+                    <button class="text-white/30 hover:text-white transition text-xl"><i class="fa-brands fa-apple"></i></button>
+                    <button class="text-white/30 hover:text-white transition text-xl"><i class="fa-brands fa-google"></i></button>
+                </div>
+                
+                <p class="text-[11px] text-white/30">
+                    Pas encore membre ? 
+                    <a href="#" class="text-white font-bold border-b border-rose-600 pb-0.5 ml-1">Créer un profil</a>
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Si l'image ne charge toujours pas, on met un fond dégradé élégant
+        document.querySelector('img').onerror = function() {
+            this.style.display = 'none';
+            document.body.style.background = "linear-gradient(135deg, #050505 0%, #1a1a1a 100%)";
+        };
+    </script>
+</body>
+</html>

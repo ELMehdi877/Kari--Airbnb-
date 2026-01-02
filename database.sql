@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS logements(
     description VARCHAR(50) NOT NULL,
     statut BOOLEAN,
     date_start DATE DEFAULT CURRENT_DATE,
-    date_start DATE DEFAULT CURRENT_DATE,
+    date_end DATE DEFAULT CURRENT_DATE,
     ville VARCHAR(20) NOT NULL,
     created_at DATE DEFAULT CURRENT_DATE
 )
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS reservation(
     logement_id INT,
     CONSTRAINT fk_reservation_logements Foreign Key (logement_id) REFERENCES logements(id),
     date_start DATE DEFAULT CURRENT_DATE,
-    date_start DATE DEFAULT CURRENT_DATE,
+    date_end DATE DEFAULT CURRENT_DATE,
     created_at DATE DEFAULT CURRENT_DATE
 )
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS review(
     user_id INT,
     CONSTRAINT fk_review_users Foreign Key (user_id) REFERENCES users(id),
     logement_id INT,
-    CONSTRAINT fk_review_users Foreign Key (logement_id) REFERENCES logements(id),
+    CONSTRAINT fk_review_logements Foreign Key (logement_id) REFERENCES logements(id),
     created_at DATE DEFAULT CURRENT_DATE
 )
 
@@ -55,6 +55,6 @@ CREATE TABLE IF NOT EXISTS favoris(
     user_id INT,
     CONSTRAINT fk_favoris_users Foreign Key (user_id) REFERENCES users(id),
     logement_id INT,
-    CONSTRAINT fk_favoris_users Foreign Key (logement_id) REFERENCES logements(id),
+    CONSTRAINT fk_favoris_logements Foreign Key (logement_id) REFERENCES logements(id),
     created_at DATE DEFAULT CURRENT_DATE
 )
