@@ -28,6 +28,7 @@ abstract class User{
     public function setEmail($email) { $this->email = $email; }
     public function setPassword($password) { $this->password = $password; }
     public function setStatut($statut) { $this->statut = $statut; }
+    public function setStatut($role) { $this->role = $role; }
 
     //abstract 
     abstract public function getRole();

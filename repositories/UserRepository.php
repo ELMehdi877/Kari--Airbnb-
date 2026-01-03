@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../core/RepositoryInterface";
 
 class UserRepository implements RepositoryInterface {
-    private PDO $pfo;
+    private PDO $pdo;
 
     // __construct
 
