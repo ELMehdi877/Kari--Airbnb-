@@ -8,7 +8,7 @@ abstract class User{
     protected  string $created_at;
 
     // __construct
-    public function __construct(string $fullname, string $email, string $password, bool $statut){
+    public function __construct(string $fullname, string $email, string $password){
         $this->fullname = $fullname;
         $this->email = $email;
         $this->password = $password;
@@ -28,7 +28,7 @@ abstract class User{
     public function setEmail($email) { $this->email = $email; }
     public function setPassword($password) { $this->password = $password; }
     public function setStatut($statut) { $this->statut = $statut; }
-    public function setStatut($role) { $this->role = $role; }
+    public function setRole($role) { $this->role = $role; }
 
     //abstract 
     abstract public function getRole();

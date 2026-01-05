@@ -1,13 +1,14 @@
 <?php
 
-require_once __DIR__ . "/entities/Voyageur.php";
+require_once __DIR__ . "/../entities/Voyageur.php";
 require_once __DIR__ . "/../repositories/UserRepository.php";
 
-class UserService {
+
+class VoyageurService {
     private $repo;
 
     public function __construct($repo){
-        $this->repo = $repo;
+        $this->repo = $repo; 
     }
 
     public function registerVoyageur(string $fullname , string $email , string $password){
@@ -16,7 +17,7 @@ class UserService {
         }
 
         else {
-            $voyageur = new Voyageur("mehdi","mehdi@gamil.com","123",true);
+            $voyageur = new Voyageur($fullname,$email,$password);
             $this->repo->save($voyageur);
             return "done";
         }

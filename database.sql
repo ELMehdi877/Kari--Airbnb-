@@ -1,13 +1,14 @@
+DROP DATABASE KARI;
 CREATE DATABASE IF NOT EXISTS KARI;
-
+use KARI;
 #Table users
 CREATE TABLE IF NOT EXISTS users(
     id INT PRIMARY KEY AUTO_INCREMENT,
     fullname VARCHAR(20) NOT NULL,
     role VARCHAR(20) NOT NULL,
     email VARCHAR(20) UNIQUE NOT NULL,
-    password VARCHAR(250) NOT NULL
-    statut BOOLEAN,
+    password VARCHAR(250) NOT NULL,
+    statut BOOLEAN
 )
 
 #Table logements

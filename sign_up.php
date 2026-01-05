@@ -112,17 +112,17 @@
                 <p class="text-[10px] uppercase tracking-[0.5em] text-white/30 font-bold">L'exception à votre portée</p>
             </div>
 
-            <form class="space-y-5">
+            <form class="space-y-5" action="register_process.php" method="POST">
                 <!-- Nom Complet -->
                 <div class="space-y-2">
                     <label class="block text-[10px] uppercase tracking-widest text-white/50 font-bold ml-1">Nom Complet</label>
-                    <input type="text" placeholder="Jean de Luxe" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20">
+                    <input type="text" name="fullname" placeholder="Jean de Luxe" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20">
                 </div>
 
                 <!-- Email -->
                 <div class="space-y-2">
                     <label class="block text-[10px] uppercase tracking-widest text-white/50 font-bold ml-1">Adresse Email</label>
-                    <input type="email" placeholder="nom@prestige.com" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20">
+                    <input type="email" name="email" placeholder="nom@prestige.com" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20">
                 </div>
 
                 <!-- Role -->
@@ -140,7 +140,7 @@
                 <!-- Mot de passe -->
                 <div class="space-y-2">
                     <label class="block text-[10px] uppercase tracking-widest text-white/50 font-bold ml-1">Créer un mot de passe</label>
-                    <input type="password" placeholder="••••••••••••" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20">
+                    <input type="password" name="password" placeholder="••••••••••••" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20">
                 </div>
 
                 <!-- Bouton Validation -->

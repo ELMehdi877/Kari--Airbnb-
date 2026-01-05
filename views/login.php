@@ -1,5 +1,5 @@
 <?php
-session_star();
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -110,7 +110,7 @@ session_star();
             </div>
             <span class="text-2xl font-bold tracking-tighter uppercase text-white">LuxeStay</span>
         </div>
-        <a href="index.html" class="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 hover:text-white transition">Accueil</a>
+        <a href="./../index.html" class="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 hover:text-white transition">Accueil</a>
     </nav>
 
     <!-- CARD CONNEXION -->
@@ -120,23 +120,18 @@ session_star();
             <div class="text-center mb-12">
                 <h1 class="serif text-5xl mb-4 italic">Bienvenue.</h1>
                 <p class="text-[10px] uppercase tracking-[0.5em] text-white/30 font-bold">Cercle Privé LuxeStay</p>
+                <?php
+                    if (!empty($_SESSION["message"])) {
+                        echo $_SESSION["message"];
+                        unset($_SESSION["message"]);
+                    }
+                ?>
             </div>
 
-            <form class="space-y-6">
+            <form class="space-y-6" method="POST" action="./../login_process.php">
                 <div class="space-y-2">
                     <label class="block text-[10px] uppercase tracking-widest text-white/50 font-bold ml-1">Email Personnel</label>
                     <input type="email" name="email" required placeholder="nom@prestige.com" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20">
-                </div>
-
-                <div class="space-y-2">
-                    <label class="block text-[10px] uppercase tracking-widest text-white/50 font-bold ml-1">Choix du Role</label>
-                    <!-- <input type="email" placeholder="nom@prestige.com" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20"> -->
-                    <select name="role" required class="w-full bg-white/5 p-4 rounded-2xl text-sm text-white">
-                        <option value="" disabled selected>Role</option>
-                        <option value="admin" desible>Admin</option>
-                        <option value="hote" desible>Hote</option>
-                        <option value="voyageur" desible>Voyageur</option>
-                    </select>
                 </div>
 
                 <div class="space-y-2">
@@ -156,7 +151,7 @@ session_star();
                 <p class="text-[11px] text-white/20 mb-8 uppercase tracking-[0.3em]">Authentification sécurisée</p>
                 <p class="text-[11px] text-white/40">
                     Pas encore membre ? 
-                    <a href="sign_up.php" class="text-white font-bold border-b border-rose-600 pb-1 ml-1">Crée un compte</a>
+                    <a href="./register.php" class="text-white font-bold border-b border-rose-600 pb-1 ml-1">Crée un compte</a>
                 </p>
             </div>
 
