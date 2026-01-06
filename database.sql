@@ -17,13 +17,13 @@ CREATE TABLE IF NOT EXISTS logements(
     user_id INT,
     CONSTRAINT fk_logements_users Foreign Key (user_id) REFERENCES users(id),
     title VARCHAR(20) NOT NULL,
-    hote VARCHAR(20) not NULL,
     prix DECIMAL(10.2) check(prix > 0),
     description VARCHAR(50) NOT NULL,
     statut BOOLEAN,
     date_start DATE DEFAULT CURRENT_DATE,
     date_end DATE DEFAULT CURRENT_DATE,
     ville VARCHAR(20) NOT NULL,
+    image_path VARCHAR(250) UNIQUE NOT NULL,
     created_at DATE DEFAULT CURRENT_DATE
 )
 

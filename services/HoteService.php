@@ -12,7 +12,7 @@ class HoteService {
     }
 
     public function registerHote(string $fullname , string $email , string $password){
-        if ($this->repo->findByEmail($email)) {
+        if ($this->repo->find($email)) {
             return "ce email existe déjat";
         }
         

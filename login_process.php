@@ -14,12 +14,12 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $pdo = Database::connect();
 $userRepo = new UserRepository($pdo);
-$result = $userRepo->findByEmail($email);
+$result = $userRepo->find($email);
 
 if ($result) {
     if (password_verify($password,$result["password"])) {
-        $_SESSION["message"] = "correct";
-        header("Location: ./views/login.php");
+        $_SESSION["user_id"] = $result["id"];
+        header("Location: ./views/host-dashboard.php");
         exit;
     }
     else {
