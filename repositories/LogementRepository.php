@@ -30,4 +30,22 @@ class LogementRepository {
         $stmt->execute([$title]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function afficheLogement(){
+        $sql = "SELECT l.*,u.fullname 
+        FROM logements l
+        LEFT JOIN users u
+        ON l.user_id = u.id";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function afficheLogementByUser($user_id){
+        $sql = "SELECT l.*
+        FROM logements l
+        LEFT JOIN users u
+        ON l.user_id = u.id WHERE l.user_id = $user_id";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

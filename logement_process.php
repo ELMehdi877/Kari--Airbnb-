@@ -28,7 +28,7 @@ if (isset($_FILES["image"]) && $_FILES["image"]["error"] === 0) {
     //dossier de destination
     $upload = __DIR__ . "/image/logement/";
     $destination = $upload . $imageName;
-    $image_path = $destination; 
+    $image_path = $imageName; 
     
     //deplacer l'image
     move_uploaded_file($tmpName, $destination);

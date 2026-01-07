@@ -59,3 +59,9 @@ CREATE TABLE IF NOT EXISTS favoris(
     CONSTRAINT fk_favoris_logements Foreign Key (logement_id) REFERENCES logements(id),
     created_at DATE DEFAULT CURRENT_DATE
 )
+
+select * from users;
+SELECT l.*,u.fullname 
+        FROM logements l
+        LEFT JOIN users u
+        ON l.user_id = u.id;
