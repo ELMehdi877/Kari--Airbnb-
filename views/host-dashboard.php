@@ -114,7 +114,7 @@
                         </label>
                     </div>
 
-                    <button type="submit" class="w-full bg-black text-white px-8 py-4 rounded-xl font-bold btn-premium text-lg">
+                    <button type="submit" name="addLogement" class="w-full bg-black text-white px-8 py-4 rounded-xl font-bold btn-premium text-lg">
                         Publier l'annonce
                     </button>
                 </form>

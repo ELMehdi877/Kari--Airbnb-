@@ -122,7 +122,81 @@ session_start();
                 }
 
             ?>
-            
+            <!-- LOGEMENT 1 -->
+            <div class="animate-card" style="animation-delay: 0.1s;">
+                <div class="relative group aspect-square rounded-2xl overflow-hidden bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    
+                    <!-- BOUTON LIKE (SANS JS & SANS DATABASE) -->
+                    <label class="absolute top-3 right-3 cursor-pointer z-10 p-2">
+                        <input type="checkbox" class="sr-only peer"> <!-- Input invisible -->
+                        <!-- Coeur vide (par défaut) -->
+                        <i class="fa-regular fa-heart text-2xl text-white drop-shadow-md peer-checked:hidden"></i>
+                        <!-- Coeur plein (quand coché) -->
+                        <i class="fa-solid fa-heart text-2xl text-rose-500 drop-shadow-md hidden peer-checked:inline"></i>
+                    </label>
+                </div>
+                <div class="mt-3">
+                    <div class="flex justify-between font-bold">
+                        <span>Paris, France</span>
+                        <span><i class="fa-solid fa-star text-xs"></i> 4,9</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Vue sur Seine</p>
+                    <p class="text-gray-500 text-sm">10-15 Oct.</p>
+                    <p class="mt-2 font-bold">240 € <span class="font-normal">nuit</span></p>
+                </div>
+            </div>
+
+            <!-- LOGEMENT 2 -->
+            <div class="animate-card" style="animation-delay: 0.2s;">
+                <div class="relative group aspect-square rounded-2xl overflow-hidden bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <!-- BOUTON LIKE MODIFIÉ -->
+                    <label class="absolute top-3 right-3 cursor-pointer z-10 p-2">
+                        <!-- On ajoute un 'name', une 'value' par défaut à 0, et un 'onchange' -->
+                        <input type="checkbox" 
+                            name="like_status" 
+                            value="0" 
+                            onclick="this.value = this.checked ? '1' : '0'" 
+                            class="sr-only peer"> 
+                        
+                        <!-- Coeur vide (par défaut) -->
+                        <i class="fa-regular fa-heart text-2xl text-white drop-shadow-md peer-checked:hidden"></i>
+                        <!-- Coeur plein (quand coché) -->
+                        <i class="fa-solid fa-heart text-2xl text-rose-500 drop-shadow-md hidden peer-checked:inline"></i>
+                    </label>
+                </div>
+                <div class="mt-3">
+                    <div class="flex justify-between font-bold">
+                        <span>Santorin, Grèce</span>
+                        <span><i class="fa-solid fa-star text-xs"></i> 4,8</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Bord de mer</p>
+                    <p class="text-gray-500 text-sm">05-12 Nov.</p>
+                    <p class="mt-2 font-bold">410 € <span class="font-normal">nuit</span></p>
+                </div>
+            </div>
+
+            <!-- LOGEMENT 3 -->
+            <div class="animate-card" style="animation-delay: 0.3s;">
+                <div class="relative group aspect-square rounded-2xl overflow-hidden bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <label class="absolute top-3 right-3 cursor-pointer z-10 p-2">
+                        <input type="checkbox" class="sr-only peer">
+                        <i class="fa-regular fa-heart text-2xl text-white drop-shadow-md peer-checked:hidden"></i>
+                        <i class="fa-solid fa-heart text-2xl text-rose-500 drop-shadow-md hidden peer-checked:inline"></i>
+                    </label>
+                </div>
+                <div class="mt-3">
+                    <div class="flex justify-between font-bold">
+                        <span>Bali, Indonésie</span>
+                        <span><i class="fa-solid fa-star text-xs"></i> 4,95</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Villa privée</p>
+                    <p class="text-gray-500 text-sm">20-25 Déc.</p>
+                    <p class="mt-2 font-bold">125 € <span class="font-normal">nuit</span></p>
+                </div>
+            </div>
 
         </div>
     </main>

@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/../entities/Logement.php";
 require_once __DIR__ . "/../repositories/UserRepository.php";
+require_once __DIR__ . "/../repositories/LogementRepository.php";
 
 
 class LogementService {
@@ -11,6 +12,7 @@ class LogementService {
         $this->repo = $repo; 
     }
 
+    //CHECK AND INSERT LOGEMENT
     public function registerLogement(int $user_id,string $title,float $prix,string $description,string $date_start,string $date_end,string $ville,string $image_path){
         if ($this->repo->find($title)) {
             return "ce logement avec ce titre existe déjat";
@@ -23,4 +25,17 @@ class LogementService {
         }
 
     }
+
+    //UPDATE LOGEMENT
+    public function updateLogementService(int $id,int $user_id,string $title,float $prix,string $description,string $date_start,string $date_end,string $ville){
+        $logement = new Logement($user_id , $title , $prix , $description , $date_start , $date_end , $ville , "");
+        $this->repo->updateLogement($id , $logement);
+    }
+
+    //DELETE LOGEMENT
+    public function deletelogementService(int $id){
+        
+        $this->repo->deleteLogement($id);
+    }
+
 }

@@ -33,8 +33,6 @@ session_start();
     </nav>
 
     <main class="max-w-7xl mx-auto px-4 py-10">
-        
-        <!-- TABLEAU DES LOGEMENTS -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
@@ -54,79 +52,56 @@ session_start();
                             $logeRepo = new LogementRepository($pdo);
                             $user_id = $_SESSION["user_id"];
                             $results = $logeRepo->afficheLogementByUser($user_id);
+                            
                             foreach($results as $logement){
-                                echo '<!-- EXEMPLE DE LOGEMENT 1 -->
-                                    <tr class="hover:bg-gray-50/50 transition" id="logement-1">
+                                
+                                echo '
+                                    <tr class="hover:bg-gray-50/50 transition"">
                                         <td class="px-6 py-4">
                                             <div class="flex items-center gap-4">
                                                 <img src="/KARI/image/logement/' . $logement['image_path'].'" class="w-14 h-14 object-cover rounded-lg shadow-sm border">
                                                 <div>
-                                                    <div class="font-bold text-gray-900" id="title-1">'.$logement['title'].'</div>
+                                                    <div class="font-bold text-gray-900">'.$logement['title'].'</div>
                                                     <div class="text-gray-500 text-sm flex items-center gap-1">
-                                                        <i class="fa-solid fa-location-dot text-xs"></i> <span id="ville-1">'.$logement['ville'].'</span>
+                                                        <i class="fa-solid fa-location-dot text-xs"></i> <span>'.$logement['ville'].'</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <p class="text-gray-600 text-sm line-clamp-1 w-48" id="desc-1">'.$logement['description'].'</p>
+                                            <p class="text-gray-600 text-sm line-clamp-1 w-48">'.$logement['description'].'</p>
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-600">
-                                            <div>Du <span id="start-1" class="font-medium">'.$logement['date_start'].'</span></div>
-                                            <div>Au <span id="end-1" class="font-medium">'.$logement['date_end'].'</span></div>
+                                            <div>Du <span class="font-medium">'.$logement['date_start'].'</span></div>
+                                            <div>Au <span class="font-medium">'.$logement['date_end'].'</span></div>
                                         </td>
                                         <td class="px-6 py-4 font-bold text-gray-900">
-                                            <span id="prix-1">240</span>€ <span class="text-[10px] text-gray-400 font-normal">/nuit</span>
+                                            '.$logement['prix'].'DH <span class="text-[10px] text-gray-400 font-normal">/nuit</span>
                                         </td>
                                         <td class="px-6 py-4 text-right">
                                             <div class="flex justify-end gap-2">
-                                                <button onclick="openEditModal(1)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
+                                                <button onclick="openEditModal(this)" 
+                                                    data-id="'.$logement['id'].'" 
+                                                    data-title="'.$logement['title'].'" 
+                                                    data-prix="'.$logement['prix'].'" 
+                                                    data-description="'.$logement['description'].'" 
+                                                    data-date_start="'.$logement['date_start'].'" 
+                                                    data-date_end="'.$logement['date_end'].'" 
+                                                    data-ville="'.$logement['ville'].'" 
+                                                    class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
                                                     <i class="fa-solid fa-pen"></i>
                                                 </button>
-                                                <button onclick="deleteRow("logement-1")" class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
+                                                <form action="./../logement_process.php" method="POST">
+                                                    <input type = "hidden" name="id" value="'.$logement['id'].'">
+                                                    <button type="submit" name="deleteLogement" class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>';
                             }
-
                         ?>
-                        <!-- EXEMPLE DE LOGEMENT 1 -->
-                        <tr class="hover:bg-gray-50/50 transition" id="logement-1">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-4">
-                                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300" class="w-14 h-14 object-cover rounded-lg shadow-sm border">
-                                    <div>
-                                        <div class="font-bold text-gray-900" id="title-1">Appartement Vue Seine</div>
-                                        <div class="text-gray-500 text-sm flex items-center gap-1">
-                                            <i class="fa-solid fa-location-dot text-xs"></i> <span id="ville-1">Paris</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <p class="text-gray-600 text-sm line-clamp-1 w-48" id="desc-1">Un magnifique studio refait à neuf avec vue sur la Tour Eiffel.</p>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600">
-                                <div>Du <span id="start-1" class="font-medium">2026-06-01</span></div>
-                                <div>Au <span id="end-1" class="font-medium">2026-06-15</span></div>
-                            </td>
-                            <td class="px-6 py-4 font-bold text-gray-900">
-                                <span id="prix-1">240</span>€ <span class="text-[10px] text-gray-400 font-normal">/nuit</span>
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <div class="flex justify-end gap-2">
-                                    <button onclick="openEditModal(1)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <button onclick="deleteRow('logement-1')" class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
                     </tbody>
                 </table>
             </div>
@@ -135,63 +110,77 @@ session_start();
 
     <!-- MODAL DE MODIFICATION -->
     <div id="editModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-card">
+        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden">
             <div class="p-6 border-b flex justify-between items-center bg-gray-50">
                 <h3 class="text-xl font-bold">Modifier les détails du logement</h3>
                 <button onclick="closeModal()" class="text-gray-400 hover:text-black text-2xl">&times;</button>
             </div>
             
-            <form class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6" onsubmit="saveChanges(event)">
-                <!-- Champs cachés -->
-                <input type="hidden" id="edit-id">
+            <form action="./../logement_process.php" method="POST" enctype="multipart/form-data" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Champ caché pour l'ID -->
+                <input type="hidden" name="id" id="edit-id">
 
                 <div class="md:col-span-2">
                     <label class="block text-sm font-bold text-gray-700 mb-1">Titre de l'annonce</label>
-                    <input type="text" id="edit-title" required class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
+                    <input type="text" name="title" id="edit-title" required class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
                 </div>
 
                 <div class="md:col-span-2">
                     <label class="block text-sm font-bold text-gray-700 mb-1">Description</label>
-                    <textarea id="edit-description" rows="3" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition"></textarea>
+                    <textarea required name="description" id="edit-description" rows="3" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition"></textarea>
                 </div>
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Ville</label>
-                    <input type="text" id="edit-ville" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
+                    <input required type="text" name="ville" id="edit-ville" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
                 </div>
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Prix par nuit (€)</label>
-                    <input type="number" id="edit-prix" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
+                    <input required type="number" name="prix" id="edit-prix" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
                 </div>
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Date de début</label>
-                    <input type="date" id="edit-start" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
+                    <input required type="date" name="date_start" id="edit-start" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
                 </div>
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Date de fin</label>
-                    <input type="date" id="edit-end" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
+                    <input required type="date" name="date_end" id="edit-end" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
                 </div>
 
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-bold text-gray-700 mb-1">URL de l'image (Image Path)</label>
-                    <input type="text" id="edit-image" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition text-blue-600 text-sm">
-                </div>
 
                 <div class="md:col-span-2 pt-4 flex gap-4">
                     <button type="button" onclick="closeModal()" class="flex-1 bg-gray-100 py-3 rounded-xl font-bold hover:bg-gray-200 transition">Annuler</button>
-                    <button type="submit" class="flex-1 bg-rose-500 text-white py-3 rounded-xl font-bold hover:bg-rose-600 shadow-lg shadow-rose-200 transition">Enregistrer les modifications</button>
+                    <button type="submit" name="updateLogement" class="flex-1 bg-rose-500 text-white py-3 rounded-xl font-bold hover:bg-rose-600 shadow-lg shadow-rose-200 transition">Enregistrer les modifications</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // Ouvrir le modal et remplir les champs avec les données actuelles
-        function openEditModal(id) {
+        // La fonction reçoit 'btn' qui est l'élément <button> cliqué
+        function openEditModal(btn) {
+            // On accède aux données via dataset
+            const id = btn.dataset.id;
+            const title = btn.dataset.title;
+            const prix = btn.dataset.prix;
+            const description = btn.dataset.description;
+            const start = btn.dataset.date_start;
+            const end = btn.dataset.date_end;
+            const ville = btn.dataset.ville;
 
+            // On remplit les champs du formulaire
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-title').value = title;
+            document.getElementById('edit-prix').value = prix;
+            document.getElementById('edit-description').value = description;
+            document.getElementById('edit-start').value = start;
+            document.getElementById('edit-end').value = end;
+            document.getElementById('edit-ville').value = ville;
+
+            // On affiche le modal
             document.getElementById('editModal').classList.remove('hidden');
         }
 
@@ -199,6 +188,7 @@ session_start();
             document.getElementById('editModal').classList.add('hidden');
         }
 
+    
     </script>
 </body>
 </html>

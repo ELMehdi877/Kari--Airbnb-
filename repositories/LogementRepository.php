@@ -9,12 +9,12 @@ class LogementRepository {
         $this->pdo = $pdo;
     }
 
-    //register dans database 
+    //INSERT
     public function save($logement){
         $stmt = $this->pdo->prepare("INSERT INTO logements(user_id,title,prix,description,statut,date_start,date_end,ville,image_path) VALUES (?,?,?,?,?,?,?,?,?)");
         $stmt->execute([
             $logement->getUserId(),
-            $logement->getTitle(),
+            $logement->getTitle(), 
             $logement->getPrix(),
             $logement->getDescription(),
             $logement->getStatut(),
@@ -25,12 +25,14 @@ class LogementRepository {
         ]);
     }
 
-    public function find($title){
+    //CHECK BY TITLE
+    public function find(string $title){
         $stmt = $this->pdo->prepare("SELECT * FROM logements WHERE title = ?");
         $stmt->execute([$title]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    //SELECT ALL
     public function afficheLogement(){
         $sql = "SELECT l.*,u.fullname 
         FROM logements l
@@ -40,7 +42,8 @@ class LogementRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function afficheLogementByUser($user_id){
+    //SELECT BY USER
+    public function afficheLogementByUser(int $user_id){
         $sql = "SELECT l.*
         FROM logements l
         LEFT JOIN users u
@@ -48,4 +51,26 @@ class LogementRepository {
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    //UPDATE
+    public function updateLogement(int $id , Logement $logement){
+        $sql = "UPDATE logements SET title = ? , prix = ? , description = ? , date_start = ? , date_end = ? , ville = ? WHERE id= $id AND user_id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            $logement->getTitle(),
+            $logement->getPrix(),
+            $logement->getDescription(),
+            $logement->getDateStart(),
+            $logement->getDateEnd(),
+            $logement->getVille(),
+            $logement->getUserId()
+        ]);
+    }
+    
+    //DELETE
+    
+        public function deleteLogement(int $id){
+            $sql = "DELETE FROM logements WHERE id = $id";
+            $stmt = $this->pdo->query($sql);
+        }   
 }
