@@ -10,6 +10,6 @@ class ReservationService{
     public function seveReservationService($title,$user_id , $logement_id , $date_start , $date_end){
         $reservation = new Reservation($user_id , $logement_id , $date_start , $date_end);
         $this->repo->save($reservation);
-        return "vous avez reserver le logement".$title;
+        return "vous avez reserver le logement : ".$title;
     }
 }

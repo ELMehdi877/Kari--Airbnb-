@@ -33,6 +33,12 @@ session_start();
             <span class="hidden md:inline tracking-tighter">airbnb</span>
         </div>
 
+        <?php
+            if (!empty($_SESSION["message"])) {
+                echo $_SESSION["message"];
+                unset($_SESSION["message"]);
+            }
+         ?>
         <!-- Menu Desktop -->
         <div class="hidden md:flex border rounded-full px-4 py-2 shadow-sm hover:shadow-md transition cursor-pointer gap-4 items-center">
             <span class="text-sm font-semibold">N'importe où</span>
@@ -86,6 +92,7 @@ session_start();
         </div>
     </div>
 
+    
     <!-- GRID LOGEMENTS -->
     <main class="px-6 md:px-16 py-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

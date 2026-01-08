@@ -1,7 +1,7 @@
 <?php
 session_start();
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["detailLogement"]) && isset($_SESSION["user_id"])) { 
-        $id = (int) ($_POST['id']);
+        $logement_id = (int) ($_POST['id']);
         $user_id = (int) ($_POST["user_id"]);
         $fullname = $_POST["fullname"];
         $title = $_POST['title'];
@@ -49,6 +49,7 @@ session_start();
                 </span>
                 <span>•</span>
                 <span class="text-sm">Annonce publiée le <?php echo $created_at ?></span>
+                
             </div>
         </header>
 
@@ -125,12 +126,13 @@ session_start();
                         <div class="grid grid-cols-2 border-b">
                             <div class="p-3 border-r">
                                 <label class="block text-[10px] font-bold uppercase">Arrivée</label>
-                                <input type="date" name="date_start" class="w-full text-sm outline-none bg-transparent" >
-                                <input type="hidden" name="id" value= "<?php echo $di; ?>">
+                                <input type="date" required name="date_start" class="w-full text-sm outline-none bg-transparent" >
+                                <input type="hidden" name="logement_id" value= "<?php echo $logement_id; ?>">
+                                <input type="hidden" name="title" value= "<?php echo $title; ?>">
                             </div>
                             <div class="p-3">
                                 <label class="block text-[10px] font-bold uppercase">Départ</label>
-                                <input type="date" name="date_end" class="w-full text-sm outline-none bg-transparent" >
+                                <input type="date" required name="date_end" class="w-full text-sm outline-none bg-transparent" >
                             </div>
                         </div>
                         <div class="p-3">
