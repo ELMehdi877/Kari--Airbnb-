@@ -185,6 +185,8 @@ if (!isset($_SESSION["user_id"])) {
                         <!-- LOGEMENT -->
                         <div class="animate-card" style="animation-delay: 0.1s;">
                             <div class="relative group aspect-square rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
+                                
+                                <!-- FORMULAIRE ENVELOPPANT POUR DÉTAILS -->
                                 <form action="detailLogement.php" method="POST" class="h-full w-full">
                                     <button type="submit" name="detailLogement" class="w-full h-full p-0 border-none bg-transparent cursor-pointer block overflow-hidden">
                                         <img src="/KARI/image/logement/' . $logement['image_path'].'" 
@@ -206,11 +208,14 @@ if (!isset($_SESSION["user_id"])) {
                                     <input type="hidden" name="created_at" value="'.$logement["created_at"].'" >
                                 </form>
 
-                                <label class="absolute top-3 right-3 cursor-pointer z-20 p-2">
-                                    <input type="checkbox" class="sr-only peer">
-                                    <i class="fa-regular fa-heart text-2xl text-white drop-shadow-md peer-checked:hidden"></i>
-                                    <i class="fa-solid fa-heart text-2xl text-rose-500 drop-shadow-md hidden peer-checked:inline"></i>
-                                </label>
+                                <!-- NOUVEAU : FORMULAIRE LIKE POUR SAUVEGARDER EN DATABASE -->
+                                <form action="./../favoris_process.php" method="POST" class="absolute top-3 right-3 z-30">
+                                    <input type="hidden" name="logement_id" value="'.$logement["id"].'">
+                                    <button type="submit" name="ajoute_favoris" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
+                                        <!-- Coeur vide par défaut, devient rose au survol -->
+                                        <i class="fa-regular fa-heart text-2xl text-white drop-shadow-md group-hover:text-rose-500 transition"></i>
+                                    </button>
+                                </form>
                             </div>
 
                             <div class="mt-3">

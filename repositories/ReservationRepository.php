@@ -36,7 +36,7 @@ class ReservationRepository{
     }
 
     public function deleteReservation($reservation_id){
-         $sql = "DELETE FROM reservation WHERE id = $reservation_id";
+        $sql = "DELETE FROM reservation WHERE id = $reservation_id";
         $stmt = $this->pdo->query($sql);
     }
 }

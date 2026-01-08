@@ -64,3 +64,8 @@ SELECT l.*,u.fullname
         FROM logements l
         LEFT JOIN users u
         ON l.user_id = u.id;
+SELECT f.id,l.*,u.fullname
+        FROM favoris f
+        INNER JOIN logements l ON l.id = f.logement_id
+        INNER JOIN users u ON u.id = f.user_id
+        WHERE f.user_id = 1;

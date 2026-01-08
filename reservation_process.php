@@ -27,7 +27,7 @@ if (isset($_POST["ajoute_reservation"])) {
 
 if (isset($_POST["delete_reservation"])) {
     $reservation_id = $_POST["delete_reservation"];
-    $reservationRepo->deleteReservation($reservation_id);
+    $reservation->deleteReservationService($reservation_id);
 }
 header("Location: ./views/index.php");
 exit;
