@@ -109,7 +109,7 @@ session_start();
 
             <!-- Colonne de Droite : Widget Réservation -->
             <div class="relative">
-                <div class="sticky top-24 bg-white border border-gray-200 rounded-3xl p-8 shadow-xl">
+                <form action="./../reservation_process.php" method="POST" class="sticky top-24 bg-white border border-gray-200 rounded-3xl p-8 shadow-xl">
                     <div class="flex justify-between items-baseline mb-6">
                         <div>
                             <span class="text-3xl font-black"><?php echo $prix ?> DH</span>
@@ -121,15 +121,16 @@ session_start();
                     </div>
 
                     <!-- Sélecteurs de dates factices -->
-                    <div class="border rounded-xl mb-6">
+                    <div  class="border rounded-xl mb-6">
                         <div class="grid grid-cols-2 border-b">
                             <div class="p-3 border-r">
                                 <label class="block text-[10px] font-bold uppercase">Arrivée</label>
-                                <input type="date" class="w-full text-sm outline-none bg-transparent" >
+                                <input type="date" name="date_start" class="w-full text-sm outline-none bg-transparent" >
+                                <input type="hidden" name="id" value= "<?php echo $di; ?>">
                             </div>
                             <div class="p-3">
                                 <label class="block text-[10px] font-bold uppercase">Départ</label>
-                                <input type="date" class="w-full text-sm outline-none bg-transparent" >
+                                <input type="date" name="date_end" class="w-full text-sm outline-none bg-transparent" >
                             </div>
                         </div>
                         <div class="p-3">
@@ -141,11 +142,11 @@ session_start();
                         </div>
                     </div>
 
-                    <button class="w-full btn-reserve text-white py-4 rounded-xl font-bold text-lg mb-4">
+                    <button type="submit" class="w-full btn-reserve text-white py-4 rounded-xl font-bold text-lg mb-4">
                         Réserver maintenant
                     </button>
 
-                </div>
+                </fomr>
             </div>
 
         </div>

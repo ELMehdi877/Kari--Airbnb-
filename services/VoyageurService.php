@@ -5,9 +5,9 @@ require_once __DIR__ . "/../repositories/UserRepository.php";
 
 
 class VoyageurService {
-    private $repo;
+    private UserRepository $repo;
 
-    public function __construct($repo){
+    public function __construct(UserRepository $repo){
         $this->repo = $repo; 
     }
 
