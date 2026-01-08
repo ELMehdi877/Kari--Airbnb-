@@ -19,8 +19,15 @@ $result = $userRepo->find($email);
 if ($result) {
     if (password_verify($password,$result["password"])) {
         $_SESSION["user_id"] = $result["id"];
-        header("Location: ./views/host-dashboard.php");
-        exit;
+        if ($result["role"] === "voyageur") {
+            header("Location: ./views/index.php");
+            exit;
+        }
+
+        if ($result["role"] === "hote") {
+            header("Location: ./views/host-dashboard.php");
+            exit;
+        }
     }
     else {
         $_SESSION["message"] = "incorrect";
