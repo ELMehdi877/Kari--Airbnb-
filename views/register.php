@@ -141,7 +141,7 @@ session_start();
                     <!-- <input type="email" placeholder="nom@prestige.com" class="w-full p-4 rounded-2xl text-sm placeholder:text-white/20"> -->
                     <select name="role" required class="w-full bg-white/5 p-4 rounded-2xl text-sm text-white">
                         <option value="" disabled selected>Role</option>
-                        <option value="hote" desible>Hote</option>
+                        <option value="Hote" desible>Hote</option>
                         <option value="voyageur" desible>Voyageur</option>
                     </select>
                 </div>

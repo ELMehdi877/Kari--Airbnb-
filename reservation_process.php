@@ -5,7 +5,7 @@ require_once __DIR__ . "/repositories/ReservationRepository.php";
 require_once __DIR__ . "/services/ReservationService.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST" || !isset($_SESSION["user_id"])) {
-    header("Location: ./index.php");
+    header("Location: ./index.html");
     exit;
 }
 
