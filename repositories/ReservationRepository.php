@@ -25,4 +25,18 @@ class ReservationRepository{
     public function find(int $id){
 
     }
+
+    public function afficheReservation($user_id){
+        $sql = "SELECT r.id,r.date_start,r.date_end,l.image_path,l.ville,l.prix,l.title
+        FROM reservation r
+        INNER JOIN logements l ON l.id = r.logement_id
+        WHERE r.user_id = $user_id";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteReservation($reservation_id){
+         $sql = "DELETE FROM reservation WHERE id = $reservation_id";
+        $stmt = $this->pdo->query($sql);
+    }
 }

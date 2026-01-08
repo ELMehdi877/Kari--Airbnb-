@@ -82,8 +82,8 @@ session_start();
                         <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-house w-5"></i> Accueil
                         </a>
-                        <a href="mes_reservations.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                            <i class="fa-solid fa-calendar-check w-5"></i> Réservations
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-calendar-check w-5"></i> Mes Réservations
                         </a>
                         <a href="favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-heart w-5"></i> Favoris
@@ -231,7 +231,7 @@ session_start();
                                 ';
                             }
                             else {
-                                echo '<button type="submit" class="w-full btn-reserve text-white py-4 rounded-xl font-bold text-lg mb-4 shadow-lg shadow-rose-200">
+                                echo '<button type="submit" name="ajoute_reservation" class="w-full btn-reserve text-white py-4 rounded-xl font-bold text-lg mb-4 shadow-lg shadow-rose-200">
                                     Réserver maintenant
                                 </button>
                                 ';

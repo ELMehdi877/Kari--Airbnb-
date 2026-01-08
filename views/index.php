@@ -48,7 +48,7 @@ if (!isset($_SESSION["user_id"])) {
                         <a href="logementsHost.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-list-check w-5"></i> Mes annonces
                         </a>
-                        <a href="mes_reservations.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-calendar-check w-5"></i> Réservations
                         </a>
                         <hr class="my-4">
@@ -70,8 +70,8 @@ if (!isset($_SESSION["user_id"])) {
                         <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-house w-5"></i> Accueil
                         </a>
-                        <a href="mes_reservations.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                            <i class="fa-solid fa-calendar-check w-5"></i> Réservations
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-calendar-check w-5"></i> Mes Réservations
                         </a>
                         <a href="favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-heart w-5"></i> Favoris
@@ -168,15 +168,18 @@ if (!isset($_SESSION["user_id"])) {
                 <?php
                     $pdo = Database::connect();
                     $logeRepo = new LogementRepository($pdo);
-                    $results = $logeRepo->afficheLogement();
+                    $resultat = $logeRepo->afficheLogement();
 
-                    foreach($results as $logement){
+                    foreach($resultat as $logement){
                         $statut = $logement["statut"];
                         if ($statut === 0) {
                             $disponibiliter = " occupé";
+                            $color = "text-red-500";
                         }
                         else{
                             $disponibiliter = "disponible";
+                            $color = "text-green-500";
+
                         }
                         echo '
                         <!-- LOGEMENT -->
@@ -219,7 +222,7 @@ if (!isset($_SESSION["user_id"])) {
                                 <p class="text-gray-500 text-sm">'.$logement['date_start'].' au '.$logement['date_end'].'</p>
                                 <div class="mt-2 flex items-center justify-between">
                                     <p class="font-bold">'.$logement['prix'].' DH <span class="font-normal text-gray-600">/ nuit</span></p>
-                                    <span class="text-xs text-gray-400">'.$disponibiliter.'</span>
+                                    <span class="text-xs '.$color.'">'.$disponibiliter.'</span>
                                 </div>
                             </div>
                         </div>';
