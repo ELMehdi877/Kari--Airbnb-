@@ -1,3 +1,19 @@
+<?php
+session_start();
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["detailLogement"]) && isset($_SESSION["user_id"])) { 
+        $id = (int) ($_POST['id']);
+        $user_id = (int) ($_POST["user_id"]);
+        $fullname = $_POST["fullname"];
+        $title = $_POST['title'];
+        $prix = $_POST['prix'];
+        $description = $_POST['description'];
+        $date_start = $_POST['date_start'];
+        $date_end = $_POST['date_end'];
+        $ville = $_POST['ville'];
+        $image_path = $_POST['image_path'];
+        $created_at = $_POST['created_at'];
+    }
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,16 +45,16 @@
             <h1 class="text-4xl font-extrabold tracking-tight mb-2">Loft Industriel avec Vue Panoramique</h1>
             <div class="flex items-center gap-4 text-gray-600">
                 <span class="flex items-center gap-1">
-                    <i class="fa-solid fa-location-dot text-rose-500"></i> Lyon, France
+                    <i class="fa-solid fa-location-dot text-rose-500"></i> <?php echo $ville ?>
                 </span>
                 <span>•</span>
-                <span class="text-sm">Annonce publiée le 12 Mai 2023</span>
+                <span class="text-sm">Annonce publiée le <?php echo $created_at ?></span>
             </div>
         </header>
 
         <!-- Image Unique (Format Cinématique) -->
         <div class="w-full h-[500px] rounded-3xl overflow-hidden shadow-2xl mb-12">
-            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=1600" 
+            <img src="/KARI/image/logement/<?php echo $image_path ?>"
                  alt="Intérieur du logement" 
                  class="w-full h-full object-cover">
         </div>
@@ -51,10 +67,10 @@
                 <!-- Infos Hôte & Disponibilité -->
                 <div class="flex justify-between items-center border-b pb-8">
                     <div>
-                        <h2 class="text-2xl font-bold">Logement entier proposé par Marc</h2>
+                        <h2 class="text-2xl font-bold">Logement entier proposé par <?php echo $fullname ?></h2>
                         <p class="text-gray-500">2 voyageurs · 1 chambre · 1 salle de bain</p>
                     </div>
-                    <img src="https://i.pravatar.cc/150?u=marc" class="w-14 h-14 rounded-full border-2 border-white shadow-md">
+                    <img src="/KARI/image/logement/<?php echo $image_path ?>" class="w-14 h-14 rounded-full border-2 border-white shadow-md">
                 </div>
 
                 <!-- Section Calendrier / Disponibilité -->
@@ -64,8 +80,8 @@
                         <h3 class="font-bold text-blue-900">Période de disponibilité</h3>
                         <p class="text-blue-800/80">
                             Ce logement est disponible du 
-                            <span class="font-semibold underline">15 Juin 2024</span> au 
-                            <span class="font-semibold underline">30 Août 2024</span>.
+                            <span class="font-semibold underline"><?php echo $date_start ?></span> au 
+                            <span class="font-semibold underline"><?php echo $date_end ?></span>.
                         </p>
                     </div>
                 </div>
@@ -74,9 +90,7 @@
                 <div>
                     <h3 class="text-xl font-bold mb-4">À propos de ce logement</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        Niché au cœur du quartier historique, ce loft allie le charme de l'ancien avec une décoration industrielle moderne. 
-                        Entièrement équipé avec des matériaux haut de gamme, il offre un espace de vie spacieux et lumineux, idéal pour les couples 
-                        ou les voyageurs d'affaires cherchant une expérience authentique.
+                        <?php echo $description ?>
                     </p>
                 </div>
 
@@ -98,7 +112,7 @@
                 <div class="sticky top-24 bg-white border border-gray-200 rounded-3xl p-8 shadow-xl">
                     <div class="flex justify-between items-baseline mb-6">
                         <div>
-                            <span class="text-3xl font-black">120 €</span>
+                            <span class="text-3xl font-black"><?php echo $prix ?> DH</span>
                             <span class="text-gray-500"> / nuit</span>
                         </div>
                         <div class="flex items-center gap-1 text-sm font-bold">
@@ -131,22 +145,6 @@
                         Réserver maintenant
                     </button>
 
-                    <p class="text-center text-sm text-gray-500 mb-6">Aucun débit pour le moment</p>
-
-                    <div class="space-y-3 border-t pt-6 text-gray-600">
-                        <div class="flex justify-between">
-                            <span class="underline">120 € x 7 nuits</span>
-                            <span>840 €</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="underline">Frais de service</span>
-                            <span>45 €</span>
-                        </div>
-                        <div class="flex justify-between font-bold text-gray-900 text-lg border-t pt-3">
-                            <span>Total</span>
-                            <span>885 €</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 

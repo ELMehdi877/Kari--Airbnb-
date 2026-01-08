@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST" || !isset($_SESSION["user_id"])) {
 
 // $id = (int) $_POST['id'] ?? null; 
 $id = (int) ($_POST['id']);
-var_dump($id);
 $user_id = $_SESSION["user_id"];
 $title = $_POST['title'] ?? null; 
 $prix = $_POST['prix'] ?? null;

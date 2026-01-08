@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS logements(
     CONSTRAINT fk_logements_users Foreign Key (user_id) REFERENCES users(id),
     title VARCHAR(20) NOT NULL,
     prix DECIMAL(10.2) check(prix > 0),
-    description VARCHAR(50) NOT NULL,
+    description VARCHAR(250) NOT NULL,
     statut BOOLEAN,
     date_start DATE DEFAULT CURRENT_DATE,
     date_end DATE DEFAULT CURRENT_DATE,
@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS logements(
     image_path VARCHAR(250) UNIQUE NOT NULL,
     created_at DATE DEFAULT CURRENT_DATE
 )
-
 
 #Table reservation
 CREATE TABLE IF NOT EXISTS reservation(
