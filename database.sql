@@ -38,6 +38,13 @@ CREATE TABLE IF NOT EXISTS reservation(
     created_at DATE DEFAULT CURRENT_DATE
 )
 
+SELECT COUNT(id) as total_revenus,logement_id FROM reservation GROUP BY logement_id ORDER BY total_revenus DESC LIMIT 10;
+
+-- SELECT COUNT(r.id) as total_revenus,r.logement_id , l.*
+-- FROM reservation r
+-- INNER JOIN logements l ON r.logement_id = l.id
+-- GROUP BY r.logement_id ORDER BY total_revenus DESC LIMIT 10;
+
 #Table review
 CREATE TABLE IF NOT EXISTS review(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -59,6 +66,7 @@ CREATE TABLE IF NOT EXISTS favoris(
 )
 
 select * from users;
+UPDATE users SET statut = 1 WHERE id = 1;
 SELECT l.*,u.fullname 
         FROM logements l
         LEFT JOIN users u
@@ -68,3 +76,7 @@ SELECT f.id,l.*,u.fullname
         INNER JOIN logements l ON l.id = f.logement_id
         INNER JOIN users u ON u.id = f.user_id
         WHERE f.user_id = 1;
+
+SELECT SUM(l.prix) 
+        FROM logements l
+        INNER JOIN reservation r ON r.logement_id = l.id; 
