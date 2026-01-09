@@ -27,42 +27,63 @@ $user_id = $_SESSION["user_id"];
 <body class="bg-gray-50">
 
     <!-- SIDEBAR (Fixe sur Desktop lg:w-64) -->
-    <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-white border-r z-[60] transition-transform -translate-x-full lg:translate-x-0 flex flex-col">
-        <div class="p-6 text-rose-500 text-3xl font-bold flex items-center justify-between border-b">
-            <div class="flex items-center gap-1">
-                <i class="fa-brands fa-airbnb"></i>
-                <span class="tracking-tighter">airbnb</span>
-            </div>
-            <!-- Bouton fermer (Mobile seulement) -->
-            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r hidden lg:flex flex-col z-[60]">
+        <div class="p-6 text-rose-500 text-3xl font-bold flex items-center gap-1 border-b">
+            <i class="fa-brands fa-airbnb"></i>
+            <span class="tracking-tighter">airbnb</span>
         </div>
+        <?php
+            if (!empty($_SESSION["role"])) {
+                if ($_SESSION["role"] === "Hote") {
+                    echo '<nav class="flex-1 p-4 space-y-2 mt-4">
+                        <p class="text-xs font-bold text-gray-400 uppercase px-3 mb-2">Gestion</p>
+                        <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-house w-5"></i> Accueil
+                        </a>
+                        
+                        <a href="logementsHost.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-list-check w-5"></i> Mes annonces
+                        </a>
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-rose-500 bg-rose-50 rounded-lg transition font-bold">
+                            <i class="fa-solid fa-calendar-check w-5"></i> Réservations
+                        </a>
+                        <hr class="my-4">
+                        
+                        <p class="text-xs font-bold text-gray-400 uppercase px-3 mb-2">Gestion</p>
 
-        <nav class="flex-1 p-4 space-y-2 mt-4">
-            <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                <i class="fa-solid fa-house w-5"></i> Accueil
-            </a>
-            <a href="reservation.php" class="flex items-center gap-3 p-3 text-rose-500 bg-rose-50 rounded-lg transition font-bold">
-                <i class="fa-solid fa-calendar-check w-5"></i> Mes Réservations
-            </a>
-            <a href="favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                <i class="fa-solid fa-heart w-5"></i> Favoris
-            </a>
-            <a href="profil.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                <i class="fa-solid fa-user w-5"></i> Mon Profil
-            </a>
-            <hr class="my-4">
-            <a href="admin.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                <i class="fa-solid fa-laptop-code w-5"></i> Mode Hôte
-            </a>
-        </nav>
+                        <a href="host-dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-plus-circle w-5"></i> Ajouter un logement
+                        </a>
 
-        <div class="p-4 border-t">
-            <button class="w-full flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 rounded-lg transition font-medium text-left">
+                        <a href="profil.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-user w-5"></i> Mon Profil
+                        </a>
+                            
+                    </nav>';
+                }
+                elseif($_SESSION["role"] === "voyageur"){
+                    echo '<nav class="flex-1 p-4 space-y-2 mt-4">
+                        <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-house w-5"></i> Accueil
+                        </a>
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-calendar-check w-5"></i> Mes Réservations
+                        </a>
+                        <a href="favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-heart w-5"></i> Favoris
+                        </a>
+                        <a href="profil.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-user w-5"></i> Mon Profil
+                        </a>            
+                    </nav>';
+                }
+            }
+        ?>
+        <form action="logout.php" method="POST" class="p-4 border-t">
+            <button name="logout" class="flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 rounded-lg transition font-medium">
                 <i class="fa-solid fa-right-from-bracket w-5"></i> Déconnexion
             </button>
-        </div>
+        </form>
     </aside>
 
     <!-- OVERLAY MOBILE (Fond sombre quand le menu est ouvert) -->

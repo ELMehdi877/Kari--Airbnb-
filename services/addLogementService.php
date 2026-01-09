@@ -12,13 +12,13 @@ class LogementService {
     }
 
     //CHECK AND INSERT LOGEMENT
-    public function registerLogement(int $user_id,string $title,float $prix,string $description,string $date_start,string $date_end,string $ville,string $image_path){
+    public function registerLogement(int $user_id,string $title,float $prix,string $description,string $ville,string $image_path){
         if ($this->repo->find($title)) {
             return "ce logement avec ce titre existe déjat";
         }
 
         else {
-            $logement = new Logement($user_id , $title , $prix , $description , $date_start , $date_end , $ville , $image_path);
+            $logement = new Logement($user_id , $title , $prix , $description , $ville , $image_path);
             $this->repo->save($logement);
             return "vous avez ajouter un nouveau Logement";
         }
@@ -26,8 +26,8 @@ class LogementService {
     }
 
     //UPDATE LOGEMENT
-    public function updateLogementService(int $id,int $user_id,string $title,float $prix,string $description,string $date_start,string $date_end,string $ville){
-        $logement = new Logement($user_id , $title , $prix , $description , $date_start , $date_end , $ville , "");
+    public function updateLogementService(int $id,int $user_id,string $title,float $prix,string $description,string $ville){
+        $logement = new Logement($user_id , $title , $prix , $description , $ville , "");
         $this->repo->updateLogement($id , $logement);
     }
 

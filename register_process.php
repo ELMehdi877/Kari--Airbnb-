@@ -28,7 +28,7 @@ if ($role === "admin") {
     exit;
 }
 
-if ($role === "hote") {
+if ($role === "Hote") {
     $voyserver = new HoteService($userRepo);
     $result = $voyserver->registerHote($fullname,$email,$password);
     $_SESSION["message"] = $result;

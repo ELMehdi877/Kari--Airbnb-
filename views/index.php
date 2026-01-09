@@ -201,8 +201,6 @@ if (!isset($_SESSION["user_id"])) {
                                     <input type="hidden" name="prix" value="'.$logement["prix"].'" >
                                     <input type="hidden" name="description" value="'.htmlspecialchars($logement["description"]).'" >
                                     <input type="hidden" name="statut" value="'.$logement["statut"].'" >
-                                    <input type="hidden" name="date_start" value="'.$logement["date_start"].'" >
-                                    <input type="hidden" name="date_end" value="'.$logement["date_end"].'" >
                                     <input type="hidden" name="ville" value="'.htmlspecialchars($logement["ville"]).'" >
                                     <input type="hidden" name="image_path" value="'.$logement["image_path"].'" >
                                     <input type="hidden" name="created_at" value="'.$logement["created_at"].'" >
@@ -224,7 +222,7 @@ if (!isset($_SESSION["user_id"])) {
                                     <span><i class="fa-solid fa-star text-xs"></i> 4.9</span>
                                 </div>
                                 <p class="text-gray-500 text-sm">'.htmlspecialchars($logement['title']).'</p>
-                                <p class="text-gray-500 text-sm">'.$logement['date_start'].' au '.$logement['date_end'].'</p>
+                                <p class="text-gray-500 text-sm">date_start au date_end</p>
                                 <div class="mt-2 flex items-center justify-between">
                                     <p class="font-bold">'.$logement['prix'].' DH <span class="font-normal text-gray-600">/ nuit</span></p>
                                     <span class="text-xs '.$color.'">'.$disponibiliter.'</span>

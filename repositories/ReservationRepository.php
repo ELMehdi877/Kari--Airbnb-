@@ -17,9 +17,9 @@ class ReservationRepository{
             $reservation->getCreatedAt()
         ]);
 
-        $logement_id = $reservation->getLogementId();
-        $sql2 = "UPDATE logements SET statut = 1 WHERE id = $logement_id";
-        $stmt2 = $this->pdo->query($sql2);
+        // $logement_id = $reservation->getLogementId();
+        // $sql2 = "INSERT INTO logements(statut) VALUES  1 WHERE id = $logement_id";
+        // $stmt2 = $this->pdo->query($sql2);
     }
 
     public function find(int $id){

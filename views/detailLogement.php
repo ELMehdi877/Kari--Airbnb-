@@ -8,8 +8,6 @@ session_start();
         $statut = (int) ($_POST['statut']);
         $prix = $_POST['prix'];
         $description = $_POST['description'];
-        $date_start = $_POST['date_start'];
-        $date_end = $_POST['date_end'];
         $ville = $_POST['ville'];
         $image_path = $_POST['image_path'];
         $created_at = $_POST['created_at'];
@@ -57,17 +55,18 @@ session_start();
                         <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-house w-5"></i> Accueil
                         </a>
+                        
                         <a href="logementsHost.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-list-check w-5"></i> Mes annonces
                         </a>
-                        <a href="mes_reservations.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-calendar-check w-5"></i> Réservations
                         </a>
                         <hr class="my-4">
                         
                         <p class="text-xs font-bold text-gray-400 uppercase px-3 mb-2">Gestion</p>
 
-                        <a href="views/host-dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                        <a href="host-dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-plus-circle w-5"></i> Ajouter un logement
                         </a>
 
@@ -88,7 +87,6 @@ session_start();
                         <a href="favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-heart w-5"></i> Favoris
                         </a>
-                        
                         <a href="profil.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-user w-5"></i> Mon Profil
                         </a>            
@@ -101,7 +99,6 @@ session_start();
                 <i class="fa-solid fa-right-from-bracket w-5"></i> Déconnexion
             </button>
         </form>
-        
     </aside>
 
     <!-- WRAPPER PRINCIPAL -->
@@ -161,8 +158,8 @@ session_start();
                             <h3 class="font-bold text-blue-900">Période de disponibilité</h3>
                             <p class="text-blue-800/80">
                                 Ce logement est disponible du 
-                                <span class="font-semibold underline"><?php echo $date_start ?></span> au 
-                                <span class="font-semibold underline"><?php echo $date_end ?></span>.
+                                <span class="font-semibold underline">2/6/2020</span> au 
+                                <span class="font-semibold underline">2/6/2020</span>.
                             </p>
                         </div>
                     </div>

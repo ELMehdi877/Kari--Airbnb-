@@ -14,14 +14,12 @@ class Logement {
     protected string $created_at;
     
     // __construct
-    public function __construct(int $user_id , string $title , float $prix , string $description , string $date_start , string $date_end , string $ville , string $image_path){
+    public function __construct(int $user_id , string $title , float $prix , string $description , string $ville , string $image_path){
         $this->user_id = $user_id;
         $this->title = $title;
         $this->prix = $prix;
         $this->description = $description;
-        $this->statut = false;
-        $this->date_start = $date_start;
-        $this->date_end = $date_end;
+        $this->statut = true;
         $this->ville = $ville;
         $this->image_path = $image_path;
     }
@@ -33,8 +31,6 @@ class Logement {
     public function getPrix() { return $this->prix; }
     public function getDescription() { return $this->description; }
     public function getStatut() { return $this->statut; }
-    public function getDateStart() { return $this->date_start; }
-    public function getDateEnd() { return $this->date_end; }
     public function getVille() { return $this->ville; }
     public function getImage_path() { return $this->image_path; }
     public function getCreatedAt() { return $this->created_at; }

@@ -29,17 +29,11 @@ if (!isset($_SESSION["user_id"])) {
 <body class="bg-gray-50">
 
     <!-- SIDEBAR (Fixe sur Desktop) -->
-    <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-white border-r z-[60] transition-transform -translate-x-full lg:translate-x-0 flex flex-col">
-        <div class="p-6 text-rose-500 text-3xl font-bold flex items-center justify-between border-b">
-            <div class="flex items-center gap-1">
-                <i class="fa-brands fa-airbnb"></i>
-                <span class="tracking-tighter">airbnb</span>
-            </div>
-            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r hidden lg:flex flex-col z-[60]">
+        <div class="p-6 text-rose-500 text-3xl font-bold flex items-center gap-1 border-b">
+            <i class="fa-brands fa-airbnb"></i>
+            <span class="tracking-tighter">airbnb</span>
         </div>
-
         <?php
             if (!empty($_SESSION["role"])) {
                 if ($_SESSION["role"] === "Hote") {
@@ -48,10 +42,11 @@ if (!isset($_SESSION["user_id"])) {
                         <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-house w-5"></i> Accueil
                         </a>
+                        
                         <a href="logementsHost.php" class="flex items-center gap-3 p-3 text-rose-500 bg-rose-50 rounded-lg transition font-bold">
                             <i class="fa-solid fa-list-check w-5"></i> Mes annonces
                         </a>
-                        <a href="mes_reservations.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-calendar-check w-5"></i> Réservations
                         </a>
                         <hr class="my-4">
@@ -73,8 +68,8 @@ if (!isset($_SESSION["user_id"])) {
                         <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-house w-5"></i> Accueil
                         </a>
-                        <a href="mes_reservations.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                            <i class="fa-solid fa-calendar-check w-5"></i> Réservations
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-calendar-check w-5"></i> Mes Réservations
                         </a>
                         <a href="favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-heart w-5"></i> Favoris
@@ -86,7 +81,6 @@ if (!isset($_SESSION["user_id"])) {
                 }
             }
         ?>
-
         <form action="logout.php" method="POST" class="p-4 border-t">
             <button name="logout" class="flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 rounded-lg transition font-medium">
                 <i class="fa-solid fa-right-from-bracket w-5"></i> Déconnexion
@@ -155,7 +149,7 @@ if (!isset($_SESSION["user_id"])) {
                                             <td class="px-6 py-4 text-sm text-gray-600">
                                                 <div class="flex flex-col">
                                                     <span class="text-[10px] text-gray-400 font-bold uppercase">Période</span>
-                                                    <span>'.$logement['date_start'].' <i class="fa-solid fa-arrow-right text-[10px] mx-1 text-gray-300"></i> '.$logement['date_end'].'</span>
+                                                    <span>date_start <i class="fa-solid fa-arrow-right text-[10px] mx-1 text-gray-300"></i> date_end</span>
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 font-bold text-gray-900">
@@ -168,8 +162,6 @@ if (!isset($_SESSION["user_id"])) {
                                                         data-title="'.$logement['title'].'" 
                                                         data-prix="'.$logement['prix'].'" 
                                                         data-description="'.$logement['description'].'" 
-                                                        data-date_start="'.$logement['date_start'].'" 
-                                                        data-date_end="'.$logement['date_end'].'" 
                                                         data-ville="'.$logement['ville'].'" 
                                                         class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">
                                                         <i class="fa-solid fa-pen"></i>
@@ -219,14 +211,7 @@ if (!isset($_SESSION["user_id"])) {
                     <label class="block text-sm font-bold text-gray-700 mb-1">Prix par nuit (DH)</label>
                     <input required type="number" name="prix" id="edit-prix" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
                 </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Date de début</label>
-                    <input required type="date" name="date_start" id="edit-start" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Date de fin</label>
-                    <input required type="date" name="date_end" id="edit-end" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 outline-none transition">
-                </div>
+                
                 <div class="md:col-span-2 pt-4 flex gap-4">
                     <button type="button" onclick="closeModal()" class="flex-1 bg-gray-100 py-3 rounded-xl font-bold hover:bg-gray-200 transition">Annuler</button>
                     <button type="submit" name="updateLogement" class="flex-1 bg-rose-500 text-white py-3 rounded-xl font-bold hover:bg-rose-600 shadow-lg shadow-rose-200 transition">Enregistrer</button>
@@ -248,8 +233,6 @@ if (!isset($_SESSION["user_id"])) {
             document.getElementById('edit-title').value = btn.dataset.title;
             document.getElementById('edit-prix').value = btn.dataset.prix;
             document.getElementById('edit-description').value = btn.dataset.description;
-            document.getElementById('edit-start').value = btn.dataset.date_start;
-            document.getElementById('edit-end').value = btn.dataset.date_end;
             document.getElementById('edit-ville').value = btn.dataset.ville;
             document.getElementById('editModal').classList.remove('hidden');
         }

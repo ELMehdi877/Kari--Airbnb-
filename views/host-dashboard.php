@@ -1,9 +1,10 @@
 <?php 
 session_start();
-if (!isset($_SESSION["user_id"]) || $_SESSION["role"] === "Hote") { 
+if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "Hote") { 
     header("Location: ./../index.html");
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -29,18 +30,11 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] === "Hote") {
 <body class="bg-gray-50">
 
     <!-- SIDEBAR FIXE (Desktop) / COULISSANTE (Mobile) -->
-    <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-white border-r z-[60] transition-transform -translate-x-full lg:translate-x-0 flex flex-col">
-        <div class="p-6 text-rose-500 text-3xl font-bold flex items-center justify-between border-b">
-            <div class="flex items-center gap-1">
-                <i class="fa-brands fa-airbnb"></i>
-                <span class="tracking-tighter">airbnb</span>
-            </div>
-            <!-- Bouton fermer (Mobile seulement) -->
-            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r hidden lg:flex flex-col z-[60]">
+        <div class="p-6 text-rose-500 text-3xl font-bold flex items-center gap-1 border-b">
+            <i class="fa-brands fa-airbnb"></i>
+            <span class="tracking-tighter">airbnb</span>
         </div>
-
         <?php
             if (!empty($_SESSION["role"])) {
                 if ($_SESSION["role"] === "Hote") {
@@ -49,10 +43,11 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] === "Hote") {
                         <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-house w-5"></i> Accueil
                         </a>
+                        
                         <a href="logementsHost.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-list-check w-5"></i> Mes annonces
                         </a>
-                        <a href="mes_reservations.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-calendar-check w-5"></i> Réservations
                         </a>
                         <hr class="my-4">
@@ -74,8 +69,8 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] === "Hote") {
                         <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-house w-5"></i> Accueil
                         </a>
-                        <a href="mes_reservations.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                            <i class="fa-solid fa-calendar-check w-5"></i> Réservations
+                        <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                            <i class="fa-solid fa-calendar-check w-5"></i> Mes Réservations
                         </a>
                         <a href="favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                             <i class="fa-solid fa-heart w-5"></i> Favoris
@@ -87,7 +82,6 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] === "Hote") {
                 }
             }
         ?>
-
         <form action="logout.php" method="POST" class="p-4 border-t">
             <button name="logout" class="flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 rounded-lg transition font-medium">
                 <i class="fa-solid fa-right-from-bracket w-5"></i> Déconnexion
@@ -155,17 +149,6 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] === "Hote") {
                                 <input type="number" name="prix" required class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-rose-500 outline-none pl-12">
                                 <span class="absolute left-4 top-3.5 text-gray-400 font-bold">DH</span>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block font-medium mb-2 text-gray-700">Date de début</label>
-                            <input id="input_date_debut" type="date" name="date_start" required class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-rose-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-medium mb-2 text-gray-700">Date de fin</label>
-                            <input id="input_date_fin" type="date" name="date_end" required class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-rose-500 outline-none">
                         </div>
                     </div>
 

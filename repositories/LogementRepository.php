@@ -11,15 +11,13 @@ class LogementRepository {
 
     //INSERT
     public function save($logement){
-        $stmt = $this->pdo->prepare("INSERT INTO logements(user_id,title,prix,description,statut,date_start,date_end,ville,image_path) VALUES (?,?,?,?,?,?,?,?,?)");
+        $stmt = $this->pdo->prepare("INSERT INTO logements(user_id,title,prix,description,statut,ville,image_path) VALUES (?,?,?,?,?,?,?)");
         $stmt->execute([
             $logement->getUserId(),
             $logement->getTitle(), 
             $logement->getPrix(),
             $logement->getDescription(),
             $logement->getStatut(),
-            $logement->getDateStart(),
-            $logement->getDateEnd(),
             $logement->getVille(),
             $logement->getImage_path()
         ]);
@@ -54,14 +52,12 @@ class LogementRepository {
 
     //UPDATE
     public function updateLogement(int $id , Logement $logement){
-        $sql = "UPDATE logements SET title = ? , prix = ? , description = ? , date_start = ? , date_end = ? , ville = ? WHERE id= $id AND user_id = ?";
+        $sql = "UPDATE logements SET title = ? , prix = ? , description = ? , ville = ? WHERE id= $id AND user_id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             $logement->getTitle(),
             $logement->getPrix(),
             $logement->getDescription(),
-            $logement->getDateStart(),
-            $logement->getDateEnd(),
             $logement->getVille(),
             $logement->getUserId()
         ]);

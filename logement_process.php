@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST" || !isset($_SESSION["user_id"])) {
 }
 
 
-$id = (int) ($_POST['id']);
 $user_id = $_SESSION["user_id"];
 $title = $_POST['title'] ?? null; 
 $prix = $_POST['prix'] ?? null;
@@ -42,15 +41,17 @@ if (isset($_POST["addLogement"])) {
         //deplacer l'image
         move_uploaded_file($tmpName, $destination);
     }
-    $result = $logement->registerLogement($user_id,$title,$prix,$description,$date_start,$date_end,$ville,$image_path);
+    $result = $logement->registerLogement($user_id,$title,$prix,$description,$ville,$image_path);
     $_SESSION["message"] = $result;
     header("Location: ./views/host-dashboard.php");
     exit;
 }
 
 //UPDATE
+$id = (int) ($_POST['id']);
+
 if (isset($_POST["updateLogement"])) {
-    $result = $logement->updateLogementService($id,$user_id,$title,$prix,$description,$date_start,$date_end,$ville);
+    $result = $logement->updateLogementService($id,$user_id,$title,$prix,$description,$ville);
     $_SESSION["message"] = $result;
     header("Location: ./views/logementsHost.php");
     exit;
