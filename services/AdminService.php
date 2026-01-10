@@ -1,13 +1,13 @@
 <?php
 
 require_once __DIR__ . "/../entities/Admin.php";
-require_once __DIR__ . "/../repositories/UserRepository.php";
+require_once __DIR__ . "/../repositories/AdminRepository.php";
 
 
 class AdminService {
-    private UserRepository $repo;
-
-    public function __construct(UserRepository $repo){
+    private AdminRepository $repo;
+    
+    public function __construct(AdminRepository $repo){
         $this->repo = $repo; 
     }
 
@@ -40,8 +40,8 @@ class AdminService {
 
     //activer ou desactiver un user ou un logement ou annuler une reservation
     public function serviceStatutAnnulation(string $button , string $table , bool $value , int $id){
-       if ($button === "satetutUserLogement") {
-        $this->repo-satetutUserLogement($table , $value , $id);
+       if ($button === "user_logement_statut") {
+        $this->repo->statutUserLogement($table , $value , $id);
        }
        elseif ($button === "annuleReservation") {
         $this->repo->annuleReservation($id);
@@ -51,7 +51,7 @@ class AdminService {
 
 
 
-    
+
     public function registerAdmin(string $fullname , string $email , string $password){
         if ($this->repo->find($email)) {
             return "ce email existe déjat";

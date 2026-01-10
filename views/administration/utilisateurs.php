@@ -1,9 +1,17 @@
-<!-- Garder le même HEAD et le même SIDEBAR que dashboard.php -->
-<!-- Modifier juste la classe 'active' dans le Sidebar et la Navbar -->
+<?php
+session_start();
+require_once __DIR__ . "/../../config/database.php";
+require_once __DIR__ . "/../../repositories/AdminRepository.php";
+// require_once __DIR__ . "/service/AdminService.php";
+if (!isset($_SESSION["user_id"])) {
+    header("Location: ./index.html");
+    exit;
+}
+$pdo = Database::connect();
+$AdminRepo = new AdminRepository($pdo);
 
-    
-
-    <!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -16,6 +24,13 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
         .nav-link.active { background: #fff1f2; color: #e11d48; border-right: 4px solid #e11d48; }
         .nav-item-top.active { border-bottom: 3px solid #e11d48; color: #e11d48; background: #fff1f2; }
+
+
+
+
+
+
+        
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -83,19 +98,35 @@
             <div class="bg-white rounded-3xl border shadow-sm overflow-hidden">
                 <table class="w-full text-left">
                     <tbody class="divide-y divide-slate-100">
+                        <?php $result = $AdminRepo->afficheUers(); ?>
+                        <?php foreach($result as $user) :  ?>
                         <tr>
                             <td class="p-6 flex items-center gap-4">
                                 <div class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold">YA</div>
-                                <div><p class="font-bold text-slate-800">Yassine Alaoui</p><p class="text-xs text-slate-400">yassine@example.com</p></div>
+                                <div><p class="font-bold text-slate-800"><?= $user["fullname"] ?></p><p class="text-xs text-slate-400"><?= $user["email"] ?></p></div>
                             </td>
-                            <td class="p-6 font-semibold text-sm">Hôte</td>
+                            <td class="p-6 font-semibold text-sm"><?= $user["role"] ?></td>
+                            <td class="p-6 font-semibold text-sm"><?= $user["statut"] ?></td>
                             <td class="p-6 text-right">
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
+                              
+                                <form action="./../../Admin_process.php" method="POST">
+                                   <button type="submit" name="button_active" value="1" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
+                                        <!-- Icône pleine, verte, avec un effet de lueur au survol -->
+                                         <input type="hidden" name="user_id_statut" value = <?= $user["id"] ?> >
+                                        <i class="fa-solid fa-circle-check text-2xl text-emerald-500 drop-shadow-md group-hover:text-emerald-400 transition-colors"></i>
+                                    </button>
+
+                                    <button type="submit" name="button_desactive" value="0" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
+                                        <!-- Icône vide, grise, qui devient verte au survol de la souris -->
+                                         <input type="hidden" name="user_id_statut" value =  <?= $user["id"] ?> >
+                                        <i class="fa-regular fa-circle-check text-2xl text-red-600 drop-shadow-sm group-hover:text-red-300 group-hover:fa-solid transition-all"></i>
+                                    </button>
+                                </form>
+
+
                             </td>
                         </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>

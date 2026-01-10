@@ -6,15 +6,15 @@ class AdminRepository{
     }  
 
     //get total de users
-    public function getAllUsers(){
+    public function getAllUsers() : int {
         $sql = "SELECT COUNT(id) as total_users FROM users WHERE role != 'admin' ";
         $stmt = $this->pdo->query($sql);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result["total_users"];   
+        return $result["total_users"]; 
     }
 
     //get total de logements
-    public function getAllLogements(){
+    public function getAllLogements() : int{
         $sql = "SELECT COUNT(id) as total_logements FROM logements ";
         $stmt = $this->pdo->query($sql);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -22,7 +22,7 @@ class AdminRepository{
     }
 
     //get total de reservations
-    public function getAllReservations(){
+    public function getAllReservations() : int{
         $sql = "SELECT COUNT(id) as total_reservations FROM logements ";
         $stmt = $this->pdo->query($sql);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,13 +30,13 @@ class AdminRepository{
     }
 
     //calcul le total des revenus 
-    public function getSomeRevenus(){
+    public function getSomeRevenus() : float{
         $sql = "SELECT SUM(l.prix) as total_revenus
         FROM logements l
         INNER JOIN reservation r ON r.logement_id = l.id";
         $stmt = $this->pdo->query($sql);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result["total_revenus"];   
+        $result = $stmt->fetch(PDO::FETCH_ASSOC) ;
+        return (float) ($result["total_revenus"] ?: 0);   
     }
 
     //get les 10 logements les plus rentable
@@ -49,7 +49,7 @@ class AdminRepository{
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];   
     }
 
-    //get tous le logement 
+    //get tous les logements
     public function afficheLogement(){
         $sql = "SELECT l.*,u.fullname 
         FROM logements l
@@ -59,8 +59,16 @@ class AdminRepository{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    //get tous les users
+    public function afficheUers() :array {
+        $sql = "SELECT * FROM users ";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
+
     //activer ou desactiver un user ou un logement
-    public function satetutUserLogement(string $table , bool $value , int $id){
+    public function statutUserLogement(string $table , int $value , int $id){
         $sql = "UPDATE $table SET statut = $value WHERE id = $id";
         $stmt = $this->pdo->query($sql);
     }
