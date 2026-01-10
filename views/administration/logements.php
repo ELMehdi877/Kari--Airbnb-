@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once __DIR__ . "/../../config/database.php";
+require_once __DIR__ . "/../../repositories/AdminRepository.php";
+// require_once __DIR__ . "/service/AdminService.php";
+if (!isset($_SESSION["user_id"])) {
+    header("Location: ./index.html");
+    exit;
+}
+$pdo = Database::connect();
+$AdminRepo = new AdminRepository($pdo);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -84,24 +96,41 @@
                             <th class="p-6">Visuel & Nom</th>
                             <th class="p-6">Localisation</th>
                             <th class="p-6">Prix</th>
+                            <th class="p-6">statut</th>
+                            <th class="p-6">date de creation</th>
                             <th class="p-6 text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
+                        <?php $result = $AdminRepo->afficheLogement(); ?>
+                        <?php foreach($result as $logement) :  ?>
+                        
                         <tr>
                             <td class="p-6 flex items-center gap-4">
-                                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300&auto=format&fit=crop" class="w-16 h-12 rounded-xl object-cover border">
-                                <span class="font-bold text-slate-800">Appartement Vue Mer</span>
+                                <img src="/KARI/image/logement/<?= $logement["image_path"] ?>" class="w-16 h-12 rounded-xl object-cover border">
+                                <span class="font-bold text-slate-800"><?= $logement["title"] ?></span>
                             </td>
-                            <td class="p-6 text-sm">Tanger, Malabata</td>
-                            <td class="p-6 font-black">950 DH</td>
+                            <td class="p-6 font-black"><?= $logement["ville"] ?></td>
+                            <td class="p-6 font-black"><?= $logement["prix"] ?> DH</td>
+                            <td class="p-6 font-black"><?= $logement["statut"] === 1 ? "Active" : "Inactive" ?></td>
+                            <td class="p-6 font-black"><?= $logement["created_at"] ?></td>
                             <td class="p-6 text-right">
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
+                                <form action="./../../Admin_process.php" method="POST">
+                                   <button type="submit" name="button_active" value="1" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
+                                        <!-- Icône pleine, verte, avec un effet de lueur au survol -->
+                                         <input type="hidden" name="logement_id_statut" value = <?= $logement["id"] ?> >
+                                        <i class="fa-solid fa-circle-check text-2xl text-emerald-500 drop-shadow-md group-hover:text-emerald-400 transition-colors"></i>
+                                    </button>
+
+                                    <button type="submit" name="button_desactive" value="0" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
+                                        <!-- Icône vide, grise, qui devient verte au survol de la souris -->
+                                         <input type="hidden" name="logement_id_statut" value =  <?= $logement["id"] ?> >
+                                        <i class="fa-regular fa-circle-check text-2xl text-red-600 drop-shadow-sm group-hover:text-red-300 group-hover:fa-solid transition-all"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>

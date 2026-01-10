@@ -97,16 +97,28 @@ $AdminRepo = new AdminRepository($pdo);
             <h1 class="text-3xl font-extrabold text-slate-900 mb-8">Gestion des Utilisateurs</h1>
             <div class="bg-white rounded-3xl border shadow-sm overflow-hidden">
                 <table class="w-full text-left">
+                    <thead class="bg-slate-50 border-b">
+                        <tr class="text-slate-400 text-[10px] font-black uppercase">
+                            <th class="p-6">Nom & Profil</th>
+                            <th class="p-6">Email</th>
+                            <th class="p-6">Role</th>
+                            <th class="p-6">Statut</th>
+                            <th class="p-6">Date de creation</th>
+                            <th class="p-6 text-right">Action</th>
+                        </tr>
+                    </thead>
                     <tbody class="divide-y divide-slate-100">
                         <?php $result = $AdminRepo->afficheUers(); ?>
                         <?php foreach($result as $user) :  ?>
                         <tr>
                             <td class="p-6 flex items-center gap-4">
                                 <div class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold">YA</div>
-                                <div><p class="font-bold text-slate-800"><?= $user["fullname"] ?></p><p class="text-xs text-slate-400"><?= $user["email"] ?></p></div>
+                                <p class="font-bold text-slate-800"><?= $user["fullname"] ?></p>
                             </td>
+                            <td class="p-6 font-semibold text-sm"><?= $user["email"] ?></td>
                             <td class="p-6 font-semibold text-sm"><?= $user["role"] ?></td>
-                            <td class="p-6 font-semibold text-sm"><?= $user["statut"] ?></td>
+                            <td class="p-6 font-semibold text-sm"><?= $user["statut"] === 1 ? "Active" : "Inactive" ?></td>
+                            <td class="p-6 font-semibold text-sm"><?= $user["created_at"] ?></td>
                             <td class="p-6 text-right">
                               
                                 <form action="./../../Admin_process.php" method="POST">

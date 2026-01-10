@@ -8,9 +8,11 @@ CREATE TABLE IF NOT EXISTS users(
     role VARCHAR(20) NOT NULL,
     email VARCHAR(20) UNIQUE NOT NULL,
     password VARCHAR(250) NOT NULL,
-    statut BOOLEAN
+    statut BOOLEAN,
+    created_at DATE DEFAULT CURRENT_DATE
 )
 
+ALTER TABLE users CHANGE COLUMN reated_at created_at DATE DEFAULT CURRENT_DATE;
 #Table logements
 CREATE TABLE IF NOT EXISTS logements(
     id INT PRIMARY KEY AUTO_INCREMENT,
