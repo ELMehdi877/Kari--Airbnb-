@@ -1,6 +1,6 @@
 <?php
 session_start();
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["detailLogement"]) && isset($_SESSION["user_id"])) { 
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["detailLogement"]) && isset($_SESSION["user_id"]) && $_SESSION["statut"] === 1 ) { 
         $logement_id = (int) ($_POST['id']);
         $user_id = (int) ($_POST["user_id"]);
         $fullname = $_POST["fullname"];
@@ -71,6 +71,12 @@ session_start();
                 </a>
                 <a href="host-dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                     <i class="fa-solid fa-plus-circle w-5"></i> Ajouter un logement
+                </a>
+            <?php endif; ?>
+
+            <?php if ($_SESSION["role"] === "admin"): ?>
+                <a href="./administration/dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium group">
+                    <i class="fa-solid fa-sliders w-5 text-lg group-hover:scale-110 transition-transform"></i>Administration
                 </a>
             <?php endif; ?>
         </nav>

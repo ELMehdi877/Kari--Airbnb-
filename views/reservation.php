@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . "/../config/database.php";
 require_once __DIR__ . "/../repositories/ReservationRepository.php";
-if (!isset($_SESSION["user_id"])) {
+if (!isset($_SESSION["user_id"]) || $_SESSION["statut"] === 0) {
     header("Location: ./../index.html");
     exit;
 }
@@ -56,6 +56,12 @@ $user_id = $_SESSION["user_id"];
                 </a>
                 <a href="host-dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                     <i class="fa-solid fa-plus-circle w-5"></i> Ajouter un logement
+                </a>
+            <?php endif; ?>
+
+            <?php if ($_SESSION["role"] === "admin"): ?>
+                <a href="./administration/dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium group">
+                    <i class="fa-solid fa-sliders w-5 text-lg group-hover:scale-110 transition-transform"></i>Administration
                 </a>
             <?php endif; ?>
         </nav>

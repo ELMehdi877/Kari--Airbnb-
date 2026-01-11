@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users(
     created_at DATE DEFAULT CURRENT_DATE
 )
 
-ALTER TABLE users CHANGE COLUMN reated_at created_at DATE DEFAULT CURRENT_DATE;
+
 #Table logements
 CREATE TABLE IF NOT EXISTS logements(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,12 +40,6 @@ CREATE TABLE IF NOT EXISTS reservation(
     created_at DATE DEFAULT CURRENT_DATE
 )
 
-SELECT COUNT(id) as total_revenus,logement_id FROM reservation GROUP BY logement_id ORDER BY total_revenus DESC LIMIT 10;
-
--- SELECT COUNT(r.id) as total_revenus,r.logement_id , l.*
--- FROM reservation r
--- INNER JOIN logements l ON r.logement_id = l.id
--- GROUP BY r.logement_id ORDER BY total_revenus DESC LIMIT 10;
 
 #Table review
 CREATE TABLE IF NOT EXISTS review(
@@ -67,18 +61,10 @@ CREATE TABLE IF NOT EXISTS favoris(
     created_at DATE DEFAULT CURRENT_DATE
 )
 
-select * from users;
-UPDATE users SET statut = 1 WHERE id = 1;
-SELECT l.*,u.fullname 
-        FROM logements l
-        LEFT JOIN users u
-        ON l.user_id = u.id;
-SELECT f.id,l.*,u.fullname
-        FROM favoris f
-        INNER JOIN logements l ON l.id = f.logement_id
-        INNER JOIN users u ON u.id = f.user_id
-        WHERE f.user_id = 1;
+SELECT COUNT(r.id) as total_revenus,r.logement_id ,r.user_id, l.*,u.fullname
+        FROM reservation r
+        INNER JOIN logements l ON r.logement_id = l.id
+        INNER JOIN users u ON l.user_id = u.id
+        GROUP BY r.logement_id ORDER BY total_revenus DESC LIMIT 10;
 
-SELECT SUM(l.prix) 
-        FROM logements l
-        INNER JOIN reservation r ON r.logement_id = l.id; 
+INSERT INTO users(fullname,role,email,password,statut) VALUES ("lahrach","admin","lahrach@gmail.com","$2y$10$5Iv9gQsoO70IYo.cwv/GA.5smvLgtsON0mvs/JCgxK2Sm7yGLjCe.",1);

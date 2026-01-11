@@ -20,6 +20,13 @@ if ($result) {
     if (password_verify($password,$result["password"])) {
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["role"] = $result["role"];
+        $_SESSION["statut"] = $result["statut"];
+
+        if ($result["statut"] === 0) {
+            $_SESSION["message"] = "Votre compte a été désactivé";
+            header("Location: ./views/login.php");
+            exit;
+        }
         header("Location: ./views/index.php");
         exit;
         //     exit;

@@ -2,8 +2,7 @@
 session_start();
 require_once __DIR__ . "/../../config/database.php";
 require_once __DIR__ . "/../../repositories/AdminRepository.php";
-// require_once __DIR__ . "/service/AdminService.php";
-if (!isset($_SESSION["user_id"])) {
+if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "admin") {
     header("Location: ./index.html");
     exit;
 }
@@ -42,33 +41,28 @@ $AdminRepo = new AdminRepository($pdo);
             <span class="tracking-tighter">airbnb</span>
         </div>
         <nav class="flex-1 p-4 space-y-2 mt-4">
-            <a href="index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+            <a href="./../index.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                 <i class="fa-solid fa-house w-5"></i> Accueil
             </a>
-            <a href="reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+            <a href="./../reservation.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                 <i class="fa-solid fa-calendar-check w-5"></i> Mes Réservations
             </a>
             <!-- ACTIF -->
-            <a href="favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+            <a href="./../favoris.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                 <i class="fa-solid fa-heart w-5"></i> Favoris
             </a>
 
             <hr class="my-4">
             <p class="text-xs font-bold text-gray-400 uppercase px-3 mb-2">Gestion</p>
 
-            <a href="profil.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+            <a href="./../profil.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
                 <i class="fa-solid fa-user w-5"></i> Mon Profil
             </a>            
-            <!-- <?php if ($_SESSION["role"] === "Hote"): ?>
-                <a href="logementsHost.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                    <i class="fa-solid fa-list-check w-5"></i> Mes annonces
-                </a>
-                <a href="host-dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
-                    <i class="fa-solid fa-plus-circle w-5"></i> Ajouter un logement
-                </a>
-            <?php endif; ?> -->
+            <a href="dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium group">
+                <i class="fa-solid fa-sliders w-5 text-lg group-hover:scale-110 transition-transform"></i>Administration
+            </a>
         </nav>
-        <form action="logout.php" method="POST" class="p-4 border-t">
+        <form action="./../logout.php" method="POST" class="p-4 border-t">
             <button name="logout" class="flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 rounded-lg transition font-medium">
                 <i class="fa-solid fa-right-from-bracket w-5"></i> Déconnexion
             </button>
@@ -85,8 +79,8 @@ $AdminRepo = new AdminRepository($pdo);
             <a href="utilisateurs.php" class="nav-item-top px-6 py-4 flex items-center gap-2 font-bold text-slate-500 hover:bg-gray-50 transition">
                 <i class="fa-solid fa-user-gear"></i> Utilisateurs
             </a>
-            <a href="logements.php" class="nav-item-top px-6 py-4 flex items-center gap-2 font-bold text-slate-500 hover:bg-gray-50 transition">
-                <i class="fa-solid fa-house-chimney"></i> Logements
+            <a href="logements.php" class="nav-item-top px-6 py-4 flex items-center gap-2 font-bold text-slate-500 hover:bg-gray-50 transition group">
+                <i class="fa-solid fa-couch w-5 text-lg group-hover:-rotate-3 transition-transform"></i> Logements
             </a>
             <a href="annulations.php" class="nav-item-top px-6 py-4 flex items-center gap-2 font-bold text-slate-500 hover:bg-gray-50 transition">
                 <i class="fa-solid fa-calendar-xmark"></i> Annulations
@@ -98,13 +92,13 @@ $AdminRepo = new AdminRepository($pdo);
             <div class="bg-white rounded-3xl border shadow-sm overflow-hidden">
                 <table class="w-full text-left">
                     <thead class="bg-slate-50 border-b">
-                        <tr class="text-slate-400 text-[10px] font-black uppercase">
-                            <th class="p-6">Nom & Profil</th>
-                            <th class="p-6">Email</th>
-                            <th class="p-6">Role</th>
-                            <th class="p-6">Statut</th>
-                            <th class="p-6">Date de creation</th>
-                            <th class="p-6 text-right">Action</th>
+                        <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase text-slate-600">
+                            <th class="px-6 py-4">Nom & Profil</th>
+                            <th class="px-6 py-4">Email</th>
+                            <th class="px-6 py-4">Role</th>
+                            <th class="px-6 py-4">Statut</th>
+                            <th class="px-6 py-4">Date de creation</th>
+                            <th class="px-6 py-4">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
@@ -113,13 +107,13 @@ $AdminRepo = new AdminRepository($pdo);
                         <tr>
                             <td class="p-6 flex items-center gap-4">
                                 <div class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold">YA</div>
-                                <p class="font-bold text-slate-800"><?= $user["fullname"] ?></p>
+                                <p class="text-sm text-slate-600"><?= $user["fullname"] ?></p>
                             </td>
-                            <td class="p-6 font-semibold text-sm"><?= $user["email"] ?></td>
-                            <td class="p-6 font-semibold text-sm"><?= $user["role"] ?></td>
-                            <td class="p-6 font-semibold text-sm"><?= $user["statut"] === 1 ? "Active" : "Inactive" ?></td>
-                            <td class="p-6 font-semibold text-sm"><?= $user["created_at"] ?></td>
-                            <td class="p-6 text-right">
+                            <td class="px-6 py-4 text-sm text-slate-600"><?= $user["email"] ?></td>
+                            <td class="px-6 py-4 text-sm text-slate-600"><?= $user["role"] ?></td>
+                            <td class="px-6 py-4 text-sm text-slate-600"><?= $user["statut"] === 1 ? "Active" : "Inactive" ?></td>
+                            <td class="px-6 py-4 text-sm text-slate-600"><?= $user["created_at"] ?></td>
+                            <td class="px-6 py-4">
                               
                                 <form action="./../../Admin_process.php" method="POST">
                                    <button type="submit" name="button_active" value="1" class="cursor-pointer p-2 group outline-none bg-transparent border-none">

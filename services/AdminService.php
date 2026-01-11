@@ -39,16 +39,14 @@ class AdminService {
     }
 
     //activer ou desactiver un user ou un logement ou annuler une reservation
-    public function serviceStatutAnnulation(string $button , string $table , bool $value , int $id){
-       if ($button === "user_logement_statut") {
-        $this->repo->statutUserLogement($table , $value , $id);
-       }
-       elseif ($button === "annuleReservation") {
-        $this->repo->annuleReservation($id);
-       }
+    public function serviceStatut(string $table , bool $value , int $id){
+        $this->repo->statutUserLogement($table , $value , $id);      
     }
-    
 
+     //activer ou desactiver un user ou un logement ou annuler une reservation
+    public function serviceAnnulation(int $id){
+        $this->repo->annuleReservation($id);
+    }
 
 
 

@@ -41,9 +41,10 @@ class AdminRepository{
 
     //get les 10 logements les plus rentable
     public function getLogementRentable(){
-        $sql = "SELECT COUNT(r.id) as total_revenus,r.logement_id , l.*
+        $sql = "SELECT COUNT(r.id) as total_revenus,r.logement_id ,r.user_id, l.*,u.fullname
         FROM reservation r
         INNER JOIN logements l ON r.logement_id = l.id
+        INNER JOIN users u ON l.user_id = u.id
         GROUP BY r.logement_id ORDER BY total_revenus DESC LIMIT 10";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];   
@@ -62,7 +63,7 @@ class AdminRepository{
 
     //get tous les users
     public function afficheUers() :array {
-        $sql = "SELECT * FROM users ";
+        $sql = "SELECT * FROM users WHERE role != 'admin' ";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
@@ -71,6 +72,18 @@ class AdminRepository{
     public function statutUserLogement(string $table , int $value , int $id){
         $sql = "UPDATE $table SET statut = $value WHERE id = $id";
         $stmt = $this->pdo->query($sql);
+    }
+
+
+    //get tous les reservation
+
+    public function getAllReservation(){
+        $sql = "SELECT r.id,r.date_start,r.date_end,l.image_path,l.ville,l.prix,l.title,u.fullname
+        FROM reservation r
+        INNER JOIN logements l ON l.id = r.logement_id
+        INNER JOIN users u ON u.id = r.user_id";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //annuler une reservation

@@ -19,7 +19,7 @@ if (isset($_POST["button_desactive"]) || isset($_POST["button_active"])) {
     if (isset($_POST["user_id_statut"])) {
         $id = $_POST["user_id_statut"];
         $value = (int) ($_POST["button_desactive"] ?? $_POST["button_active"]) ;
-        $serviceStatut->serviceStatutAnnulation("user_logement_statut" , "users" , $value , $id);
+        $serviceStatut->serviceStatut("users" , $value , $id);
         header("Location: ./views/administration/utilisateurs.php");
         exit;
         
@@ -27,8 +27,19 @@ if (isset($_POST["button_desactive"]) || isset($_POST["button_active"])) {
     elseif (isset($_POST["logement_id_statut"])) {
         $id = $_POST["logement_id_statut"];
         $value = (int) ($_POST["button_desactive"] ?? $_POST["button_active"]) ;
-        $serviceStatut->serviceStatutAnnulation("user_logement_statut" , "logements" , $value , $id);
+        $serviceStatut->serviceStatut("logements" , $value , $id);
+        if (isset($_POST["dashboard"])) {
+            header("Location: ./views/administration/dashboard.php");
+            exit;
+        }
         header("Location: ./views/administration/logements.php");
         exit;
     }
+}
+
+if (isset($_POST["annulation"])) {
+    $id = $_POST["annulation"];
+    $serviceStatut->serviceAnnulation($id);
+    header("Location: ./views/administration/annulations.php");
+    exit;
 }
