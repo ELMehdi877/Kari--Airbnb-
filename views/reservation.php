@@ -116,6 +116,7 @@ $user_id = $_SESSION["user_id"];
                                 <div class="md:w-72 h-48 md:h-auto overflow-hidden">
                                     <img src="/KARI/image/logement/'.$reservation["image_path"].'" class="w-full h-full object-cover" alt="Logement">
                                 </div>
+    
                                 <!-- Détails -->
                                 <div class="flex-1 p-6 flex flex-col justify-between">
                                     <div>
@@ -150,95 +151,35 @@ $user_id = $_SESSION["user_id"];
                                             <p class="text-[10px] text-gray-400 font-bold uppercase">Total payé</p>
                                             <p class="text-xl font-black text-gray-900">'.$reservation["prix"].' DH</p>
                                         </div>
-                                        <form action="./../reservation_process.php" method="POST" class="flex gap-2">
-                                            <button class="px-4 py-2 text-sm font-bold text-gray-700 border rounded-lg hover:bg-gray-50 transition">Détails</button>
-                                            <button type="submit" name="delete_reservation" value="'.$reservation["id"].'" class="px-4 py-2 text-sm font-bold text-rose-500 border border-rose-100 rounded-lg hover:bg-rose-50 transition">
-                                                Annuler
-                                            </button>
-                                        </form>
+                                        <div class="flex gap-2">
+                                            <form action="./../reçusPDF.php" method="GET" class="flex gap-2">
+                                                <input type="hidden" name="id" value="'.$reservation["id"].'" >
+                                                <input type="hidden" name="fullname" value="'.htmlspecialchars($reservation["fullname"]).'" >
+                                                <input type="hidden" name="title" value="'.htmlspecialchars($reservation["title"]).'"  >
+                                                <input type="hidden" name="prix" value="'.$reservation["prix"].'" >
+                                                <input type="hidden" name="date_start" value="'.htmlspecialchars($reservation["date_start"]).'" >
+                                                <input type="hidden" name="date_end" value="'.$reservation["date_end"].'" >
+                                                <input type="hidden" name="ville" value="'.htmlspecialchars($reservation["ville"]).'" >
+                                                <input type="hidden" name="description" value="'.$reservation["description"].'" >
+                                                <button type="submit" name="reservation_pdf" class="px-4 py-2 text-sm font-bold text-yellow-700 border rounded-lg hover:bg-gray-50 transition">
+                                                    Télécharger le reçus
+                                                </button>
+                                            </form>  
+                                            <form action="./../reservation_process.php" method="POST" class="flex gap-2">
+                                                <input type="hidden" name="title" value="'.htmlspecialchars($reservation["title"]).'" >
+                                                <input type="hidden" name="email" value="'.htmlspecialchars($reservation["email"]).'" >
+                                                <button type="submit" name="delete_reservation" value="'.$reservation["id"].'" class="px-4 py-2 text-sm font-bold text-rose-500 border border-rose-100 rounded-lg hover:bg-rose-50 transition">
+                                                    Annuler
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>';
                         }
                     }
                 ?>
-                <!-- RÉSERVATION 1 -->
-                <div class="bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row">
-                    <!-- Image -->
-                    <div class="md:w-72 h-48 md:h-auto overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800" class="w-full h-full object-cover" alt="Logement">
-                    </div>
-                    <!-- Détails -->
-                    <div class="flex-1 p-6 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <h3 class="text-xl font-bold text-gray-900">Loft Industriel avec Vue</h3>
-                                    <p class="text-gray-500 text-sm flex items-center gap-1">
-                                        <i class="fa-solid fa-location-dot text-rose-500"></i> Paris, France
-                                    </p>
-                                </div>
-                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                                    Confirmé
-                                </span>
-                            </div>
-                            
-                            <!-- Dates -->
-                            <div class="grid grid-cols-2 gap-4 mt-4 py-4 border-y border-gray-50">
-                                <div>
-                                    <p class="text-[10px] font-bold text-gray-400 uppercase">Arrivée</p>
-                                    <p class="font-semibold text-gray-800">12 Juin 2026</p>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] font-bold text-gray-400 uppercase">Départ</p>
-                                    <p class="font-semibold text-gray-800">18 Juin 2026</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Actions & Prix -->
-                        <div class="mt-6 flex items-center justify-between">
-                            <div>
-                                <p class="text-[10px] text-gray-400 font-bold uppercase">Total payé</p>
-                                <p class="text-xl font-black text-gray-900">1,250 DH</p>
-                            </div>
-                            <div class="flex gap-2">
-                                <button class="px-4 py-2 text-sm font-bold text-gray-700 border rounded-lg hover:bg-gray-50 transition">Détails</button>
-                                <button onclick="confirmCancel()" class="px-4 py-2 text-sm font-bold text-rose-500 border border-rose-100 rounded-lg hover:bg-rose-50 transition">
-                                    Annuler
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RÉSERVATION 2 -->
-                <div class="bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row opacity-80">
-                    <!-- Image -->
-                    <div class="md:w-72 h-48 md:h-auto overflow-hidden grayscale">
-                        <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800" class="w-full h-full object-cover" alt="Logement">
-                    </div>
-                    <!-- Détails -->
-                    <div class="flex-1 p-6 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <h3 class="text-xl font-bold text-gray-900">Villa avec piscine privée</h3>
-                                    <p class="text-gray-500 text-sm flex items-center gap-1">
-                                        <i class="fa-solid fa-location-dot text-rose-500"></i> Marrakech, Maroc
-                                    </p>
-                                </div>
-                                <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                                    Terminé
-                                </span>
-                            </div>
-                            <p class="text-sm text-gray-400 mt-2 italic">Vous avez séjourné ici en Janvier 2024</p>
-                        </div>
-                        <div class="mt-6">
-                            <button class="px-4 py-2 text-sm font-bold text-rose-500 border border-rose-200 rounded-lg hover:bg-rose-50 transition">Laisser un avis</button>
-                        </div>
-                    </div>
-                </div>
+        
 
             </div>
         </main>

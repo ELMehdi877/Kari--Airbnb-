@@ -184,6 +184,7 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["statut"] === 0) {
                                     <input type="hidden" name="id" value="'.$logement["id"].'" >
                                     <input type="hidden" name="user_id" value="'.$logement["user_id"].'" >
                                     <input type="hidden" name="fullname" value="'.htmlspecialchars($logement["fullname"]).'" >
+                                    <input type="hidden" name="email" value="'.htmlspecialchars($logement["email"]).'" >
                                     <input type="hidden" name="title" value="'.htmlspecialchars($logement["title"]).'"  >
                                     <input type="hidden" name="prix" value="'.$logement["prix"].'" >
                                     <input type="hidden" name="description" value="'.htmlspecialchars($logement["description"]).'" >

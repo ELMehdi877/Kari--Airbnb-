@@ -20,6 +20,8 @@ if ($result) {
     if (password_verify($password,$result["password"])) {
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["role"] = $result["role"];
+        $_SESSION["email"] = $result["email"];
+        $_SESSION["fullname"] = $result["fullname"];
         $_SESSION["statut"] = $result["statut"];
 
         if ($result["statut"] === 0) {

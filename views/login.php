@@ -1,6 +1,5 @@
 <?php
 session_start();
-$password = password_hash('123',PASSWORD_DEFAULT);
 ?>
 
 <!DOCTYPE html>

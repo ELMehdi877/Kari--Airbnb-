@@ -32,7 +32,7 @@ class LogementRepository {
 
     //SELECT ALL
     public function afficheLogement(){
-        $sql = "SELECT l.*,u.fullname 
+        $sql = "SELECT l.*,u.fullname,u.email 
         FROM logements l
         LEFT JOIN users u
         ON l.user_id = u.id";

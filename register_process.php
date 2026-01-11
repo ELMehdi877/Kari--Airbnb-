@@ -30,7 +30,7 @@ if ($role === "admin") {
 
 if ($role === "Hote") {
     $voyserver = new HoteService($userRepo);
-    $result = $voyserver->registerHote($fullname,$email,$password);
+    $result = $voyserver->registerHote($fullname,$email,$password,null);
     $_SESSION["message"] = $result;
     header('Location: ./views/register.php');
     exit;
@@ -38,7 +38,7 @@ if ($role === "Hote") {
 
 if ($role === "voyageur") {
     $voyserver = new VoyageurService($userRepo);
-    $result = $voyserver->registerVoyageur($fullname,$email,$password);
+    $result = $voyserver->registerVoyageur($fullname,$email,$password,null);
     $_SESSION["message"] = $result;
     header('Location: ./views/register.php');
     exit;

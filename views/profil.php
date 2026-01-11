@@ -1,5 +1,6 @@
 <?php 
 require_once __DIR__ . "/../config/database.php";
+require_once __DIR__ . "/../repositories/UserRepository.php";
 session_start();
 
 if (!isset($_SESSION["user_id"]) || $_SESSION["statut"] === 0) { 
@@ -9,16 +10,15 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["statut"] === 0) {
 
 // Récupération des données utilisateur en temps réel
 $pdo = Database::connect();
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->execute([$_SESSION["user_id"]]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$repo = new UserRepository($pdo);
+$user = $repo->getAllUsers($_SESSION["user_id"]);
 
 // Définition des couleurs de statut
-$statusLabel = ($user['statut'] == 1) ? 'Compte Actif' : 'Compte Restreint';
-$statusColor = ($user['statut'] == 1) ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
+$statusLabel = ($user['statut'] === 1) ? 'Compte Actif' : 'Compte Restreint';
+$statusColor = ($user['statut'] === 1) ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
 
 // Gestion de la photo (chemin par défaut si vide)
-$userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : null;
+$userPhoto = !empty($user['photo']) ? "/KARI/image/profile/" . $user["photo"] : null;
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +64,15 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                 <a href="logementsHost.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-xl transition font-medium">
                     <i class="fa-solid fa-list-check w-5"></i> Mes annonces
                 </a>
+                <a href="host-dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium">
+                    <i class="fa-solid fa-plus-circle w-5"></i> Ajouter un logement
+                </a>
+            <?php endif; ?>
+
+            <?php if ($_SESSION["role"] === "admin"): ?>
+                <a href="./administration/dashboard.php" class="flex items-center gap-3 p-3 text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition font-medium group">
+                    <i class="fa-solid fa-sliders w-5 text-lg group-hover:scale-110 transition-transform"></i>Administration
+                </a>
             <?php endif; ?>
         </nav>
         <form action="logout.php" method="POST" class="p-4 border-t">
@@ -82,7 +91,7 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                 <p class="text-gray-500 mt-1">Personnalisez votre présence sur la plateforme.</p>
             </div>
 
-            <form action="process_update_profile.php" method="POST" enctype="multipart/form-data">
+            <form action="./../update_profile_process.php" method="POST" enctype="multipart/form-data">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     
                     <!-- COLONNE GAUCHE : PHOTO & STATUT -->
@@ -97,7 +106,7 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                                         <img id="preview" src="<?= $userPhoto ?>" class="w-full h-full object-cover rounded-full">
                                     <?php else: ?>
                                         <div id="placeholder" class="w-full h-full bg-slate-100 rounded-full flex items-center justify-center text-4xl font-bold text-rose-500 uppercase">
-                                            <?= substr($user['fullname'], 0, 1) ?>
+                                            <?= substr($user['fullname'], 0, 2) ?>
                                         </div>
                                         <img id="preview" src="#" class="hidden w-full h-full object-cover rounded-full">
                                     <?php endif; ?>
@@ -106,12 +115,14 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                                 <label for="photo" class="absolute bottom-1 right-1 bg-white w-10 h-10 rounded-full shadow-md flex items-center justify-center text-rose-500 cursor-pointer hover:scale-110 transition active:scale-95 border border-gray-100">
                                     <i class="fa-solid fa-camera"></i>
                                     <input type="file" id="photo" name="photo" class="hidden" accept="image/*" onchange="previewImage(this)">
+                                    <input type="hidden" name="photo_hidden"  value ="<?= $user["photo"]?>">
                                 </label>
+                             
                             </div>
 
                             <div class="mt-4">
                                 <h2 class="text-xl font-bold text-gray-900"><?= htmlspecialchars($user['fullname']) ?></h2>
-                                <p class="text-sm text-gray-400 font-medium italic">@<?= strtolower(str_replace(' ', '', $user['fullname'])) ?></p>
+                                <p class="text-sm text-gray-400 font-medium italic"><?= htmlspecialchars($user['email']) ?></p>
                             </div>
 
                             <div class="mt-6 flex flex-col gap-3">
@@ -152,6 +163,12 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                                 <div>
                                     <h3 class="text-xl font-bold text-gray-900">Informations personnelles</h3>
                                     <p class="text-sm text-gray-500">Ces informations seront visibles par les hôtes lors de vos réservations.</p>
+                                    <?php
+                                        if (!empty($_SESSION["info"])) {
+                                            echo $_SESSION["info"];
+                                            unset($_SESSION["info"]);
+                                        }
+                                    ?>
                                 </div>
                             </div>
 
@@ -161,7 +178,7 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                                     <label class="text-sm font-bold text-gray-700 flex items-center gap-2">
                                         <i class="fa-solid fa-signature text-rose-500 text-xs"></i> Nom complet
                                     </label>
-                                    <input type="text" name="fullname" value="<?= htmlspecialchars($user['fullname']) ?>" 
+                                    <input type="text" name="fullname" required value="<?= htmlspecialchars($user['fullname']) ?>" 
                                     class="input-premium w-full px-5 py-4 bg-slate-50/50 rounded-2xl focus:bg-white transition-all font-medium text-gray-700">
                                 </div>
 
@@ -170,7 +187,7 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                                     <label class="text-sm font-bold text-gray-700 flex items-center gap-2">
                                         <i class="fa-solid fa-envelope text-rose-500 text-xs"></i> Adresse Email
                                     </label>
-                                    <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" 
+                                    <input type="email" name="email" required value="<?= htmlspecialchars($user['email']) ?>" 
                                     class="input-premium w-full px-5 py-4 bg-slate-50/50 rounded-2xl focus:bg-white transition-all font-medium text-gray-700">
                                 </div>
 
@@ -191,7 +208,7 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                                         <i class="fa-solid fa-calendar text-xs"></i> Date d'inscription
                                     </label>
                                     <div class="w-full px-5 py-4 bg-gray-100 text-gray-500 rounded-2xl border border-transparent font-bold cursor-not-allowed">
-                                        <?= date('d M Y', strtotime($user['created_at'])) ?>
+                                        <?= date("d M Y" , strtotime($user["created_at"]))?>
                                     </div>
                                 </div>
                                 <!-- PASSWORD -->
@@ -199,7 +216,7 @@ $userPhoto = !empty($user['photo']) ? "../uploads/profiles/" . $user['photo'] : 
                                   <label class="text-sm font-bold text-gray-700 ml-1">Changer le mot de passe</label>
                                   <div class="relative">
                                       <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                      <input type="password" name="new_password" 
+                                      <input type="password" required name="new_password" 
                                       class="input-premium w-full pl-11 pr-4 py-3.5 bg-gray-50/50 rounded-2xl focus:bg-white transition-all" placeholder="Laisser vide pour ne pas modifier">
                                   </div>
                               </div>

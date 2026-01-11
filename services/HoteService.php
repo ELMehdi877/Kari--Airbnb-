@@ -11,13 +11,13 @@ class HoteService {
         $this->repo = $repo; 
     }
 
-    public function registerHote(string $fullname , string $email , string $password){
+    public function registerHote(string $fullname , string $email , string $password ){
         if ($this->repo->find($email)) {
             return "ce email existe déjat";
         }
         
         else {
-            $voyageur = new Hote($fullname,$email,$password);
+            $voyageur = new Hote($fullname,$email,$password ,null);
             $this->repo->save($voyageur);
             return "done";
         }

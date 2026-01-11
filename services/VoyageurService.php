@@ -17,7 +17,7 @@ class VoyageurService {
         }
 
         else {
-            $voyageur = new Voyageur($fullname,$email,$password);
+            $voyageur = new Voyageur($fullname,$email,$password,null);
             $this->repo->save($voyageur);
             return "done";
         }

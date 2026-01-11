@@ -4,6 +4,7 @@ session_start();
         $logement_id = (int) ($_POST['id']);
         $user_id = (int) ($_POST["user_id"]);
         $fullname = $_POST["fullname"];
+        $email = $_POST["email"];
         $title = $_POST['title'];
         $statut = (int) ($_POST['statut']);
         $prix = $_POST['prix'];
@@ -192,6 +193,7 @@ session_start();
                                     <input type="date" required name="date_start" class="w-full text-sm outline-none bg-transparent">
                                     <input type="hidden" name="logement_id" value="<?php echo $logement_id; ?>">
                                     <input type="hidden" name="title" value="<?php echo $title; ?>">
+                                    <input type="hidden" name="email" value="<?= $email ?>">
                                 </div>
                                 <div class="p-3 hover:bg-gray-50 transition">
                                     <label class="block text-[10px] font-bold uppercase text-gray-500">Départ</label>

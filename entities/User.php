@@ -1,18 +1,19 @@
 <?php
 abstract class User{
-    protected  int $id;
-    protected  string $fullname;
-    protected  string $email;
-    protected  string $password;
+    protected int $id;
+    protected string $fullname;
+    protected string $email;
+    protected string $password;
     protected string $statut;
-    protected  string $created_at;
+    protected string|null $photo;
 
     // __construct
-    public function __construct(string $fullname, string $email, string $password){
+    public function __construct(string $fullname , string $email , string $password , string|null $photo){
         $this->fullname = $fullname;
         $this->email = $email;
         $this->password = $password;
         $this->statut = true;
+        $this->photo = $photo;
     }
 
     // Getters
@@ -21,6 +22,7 @@ abstract class User{
     public function getEmail(){ return $this->email; }
     public function getPassword(){ return $this->password; }
     public function getStatut(){ return $this->statut; }
+    public function getPhoto(){ return $this->Photo; }
     
     // Setters
     public function setId(int $id){ $this->id = $id; }

@@ -6,12 +6,14 @@ CREATE TABLE IF NOT EXISTS users(
     id INT PRIMARY KEY AUTO_INCREMENT,
     fullname VARCHAR(20) NOT NULL,
     role VARCHAR(20) NOT NULL,
-    email VARCHAR(20) UNIQUE NOT NULL,
+    email VARCHAR(250) UNIQUE NOT NULL,
     password VARCHAR(250) NOT NULL,
     statut BOOLEAN,
-    created_at DATE DEFAULT CURRENT_DATE
+    created_at DATE DEFAULT CURRENT_DATE,
+    photo VARCHAR(250)
 )
 
+alter table users modify column email VARCHAR(250) UNIQUE NOT NULL;
 
 #Table logements
 CREATE TABLE IF NOT EXISTS logements(
@@ -68,3 +70,5 @@ SELECT COUNT(r.id) as total_revenus,r.logement_id ,r.user_id, l.*,u.fullname
         GROUP BY r.logement_id ORDER BY total_revenus DESC LIMIT 10;
 
 INSERT INTO users(fullname,role,email,password,statut) VALUES ("lahrach","admin","lahrach@gmail.com","$2y$10$5Iv9gQsoO70IYo.cwv/GA.5smvLgtsON0mvs/JCgxK2Sm7yGLjCe.",1);
+
+SELECT * FROM users WHERE email = "amine@gmail.com" AND id != 2;

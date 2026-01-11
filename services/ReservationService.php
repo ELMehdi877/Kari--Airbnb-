@@ -12,8 +12,8 @@ class ReservationService{
         $this->repo->save($reservation);
         return "vous avez reserver le logement : ".$title;
     }
-    public function deleteReservationService($reservation_id){
+    public function deleteReservationService($reservation_id,$title){
         $this->repo->deleteReservation($reservation_id);
-
+        return "la reserver de le logement : ".$title." a été annuler";
     }
 }
