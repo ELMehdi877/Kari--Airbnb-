@@ -23,7 +23,7 @@ class AdminRepository{
 
     //get total de reservations
     public function getAllReservations() : int{
-        $sql = "SELECT COUNT(id) as total_reservations FROM logements ";
+        $sql = "SELECT COUNT(id) as total_reservations FROM reservation ";
         $stmt = $this->pdo->query($sql);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result["total_reservations"];   
@@ -41,7 +41,7 @@ class AdminRepository{
 
     //get les 10 logements les plus rentable
     public function getLogementRentable(){
-        $sql = "SELECT COUNT(r.id) as total_revenus,r.logement_id ,r.user_id, l.*,u.fullname
+        $sql = "SELECT COUNT(r.logement_id) as total_revenus ,r.id ,r.user_id, l.*,u.fullname
         FROM reservation r
         INNER JOIN logements l ON r.logement_id = l.id
         INNER JOIN users u ON l.user_id = u.id

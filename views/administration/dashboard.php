@@ -150,54 +150,54 @@ $admineService = new AdminService($AdminRepo);
                         ?>
                         <?php foreach($result as $logement) : ?>
 
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="p-5 text-center font-black text-rose-500 text-lg"><?= ++$i ; ?></td>
-                            <td class="p-5  flex items-center gap-4">
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-5 text-center font-black text-rose-500 text-lg"><?= ++$i ; ?></td>
+                                <td class="p-5  flex items-center gap-4">
 
-                                    <form action="/KARI/views/detailLogement.php" method="POST">
-                                        <button type="submit" name="detailLogement" class="w-full h-full p-0 border-none bg-transparent cursor-pointer block overflow-hidden">
-                                            <img src="/KARI/image/logement/<?= $logement["image_path"] ?>" class="w-16 h-12 rounded-xl object-cover border">
-                                            <spam class="font-black"><?= $logement["title"]?></spam>
+                                        <form action="/KARI/views/detailLogement.php" method="POST">
+                                            <button type="submit" name="detailLogement" class="w-full h-full p-0 border-none bg-transparent cursor-pointer block overflow-hidden">
+                                                <img src="/KARI/image/logement/<?= $logement["image_path"] ?>" class="w-16 h-12 rounded-xl object-cover border">
+                                                <spam class="font-black"><?= $logement["title"]?></spam>
+                                            </button>
+
+                                            <input type="hidden" name="id" value="<?=$logement["id"]?>" >
+                                            <input type="hidden" name="user_id" value="<?=$logement["user_id"]?>" >
+                                            <input type="hidden" name="fullname" value="<?=htmlspecialchars($logement["fullname"])?>" >
+                                            <input type="hidden" name="title" value="<?=htmlspecialchars($logement["title"])?>"  >
+                                            <input type="hidden" name="prix" value="<?=$logement["prix"]?>" >
+                                            <input type="hidden" name="description" value="<?=htmlspecialchars($logement["description"])?>" >
+                                            <input type="hidden" name="statut" value="<?=$logement["statut"]?>" >
+                                            <input type="hidden" name="ville" value="<?=htmlspecialchars($logement["ville"])?>" >
+                                            <input type="hidden" name="image_path" value="<?=$logement["image_path"]?>" >
+                                            <input type="hidden" name="created_at" value="<?=$logement["created_at"]?>" >
+                                        </form>
+
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600">
+                                    <i class="fa-solid fa-location-dot text-xs"></i>
+                                    <?= $logement["ville"] ?>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600"><?= $logement["fullname"] ?></td>
+                                <td class="px-6 py-4 text-sm text-slate-600"><?= $logement["prix"] ?> DH</td>
+                                <td class="px-6 py-4 text-sm text-slate-600"><?= $logement["statut"] === 1 ? "Active" : "Inactive" ?></td>
+                                <td class="px-6 py-4 text-sm text-slate-600"><?= $logement["created_at"] ?></td>
+                                <td class="px-6 py-4">
+                                    <form action="./../../Admin_process.php" method="POST">
+                                    <button type="submit" name="button_active" value="1" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
+                                            <!-- Icône pleine, verte, avec un effet de lueur au survol -->
+                                            <input type="hidden" name="logement_id_statut" value = <?= $logement["id"] ?> >
+                                            <input type="hidden" name="dashboard" >
+                                            <i class="fa-solid fa-circle-check text-2xl text-emerald-500 drop-shadow-md group-hover:text-emerald-400 transition-colors"></i>
                                         </button>
 
-                                        <input type="hidden" name="id" value="<?=$logement["id"]?>" >
-                                        <input type="hidden" name="user_id" value="<?=$logement["user_id"]?>" >
-                                        <input type="hidden" name="fullname" value="<?=htmlspecialchars($logement["fullname"])?>" >
-                                        <input type="hidden" name="title" value="<?=htmlspecialchars($logement["title"])?>"  >
-                                        <input type="hidden" name="prix" value="<?=$logement["prix"]?>" >
-                                        <input type="hidden" name="description" value="<?=htmlspecialchars($logement["description"])?>" >
-                                        <input type="hidden" name="statut" value="<?=$logement["statut"]?>" >
-                                        <input type="hidden" name="ville" value="<?=htmlspecialchars($logement["ville"])?>" >
-                                        <input type="hidden" name="image_path" value="<?=$logement["image_path"]?>" >
-                                        <input type="hidden" name="created_at" value="<?=$logement["created_at"]?>" >
+                                        <button type="submit" name="button_desactive" value="0" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
+                                            <!-- Icône vide, grise, qui devient verte au survol de la souris -->
+                                            <input type="hidden" name="logement_id_statut" value =  <?= $logement["id"] ?> >
+                                            <i class="fa-regular fa-circle-check text-2xl text-red-600 drop-shadow-sm group-hover:text-red-300 group-hover:fa-solid transition-all"></i>
+                                        </button>
                                     </form>
-
-                            </td>
-                            <td class="px-6 py-4 text-sm text-slate-600">
-                                <i class="fa-solid fa-location-dot text-xs"></i>
-                                <?= $logement["ville"] ?>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-slate-600"><?= $logement["fullname"] ?></td>
-                            <td class="px-6 py-4 text-sm text-slate-600"><?= $logement["prix"] ?> DH</td>
-                            <td class="px-6 py-4 text-sm text-slate-600"><?= $logement["statut"] === 1 ? "Active" : "Inactive" ?></td>
-                            <td class="px-6 py-4 text-sm text-slate-600"><?= $logement["created_at"] ?></td>
-                            <td class="px-6 py-4">
-                                <form action="./../../Admin_process.php" method="POST">
-                                   <button type="submit" name="button_active" value="1" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
-                                        <!-- Icône pleine, verte, avec un effet de lueur au survol -->
-                                         <input type="hidden" name="logement_id_statut" value = <?= $logement["id"] ?> >
-                                         <input type="hidden" name="dashboard" >
-                                        <i class="fa-solid fa-circle-check text-2xl text-emerald-500 drop-shadow-md group-hover:text-emerald-400 transition-colors"></i>
-                                    </button>
-
-                                    <button type="submit" name="button_desactive" value="0" class="cursor-pointer p-2 group outline-none bg-transparent border-none">
-                                        <!-- Icône vide, grise, qui devient verte au survol de la souris -->
-                                         <input type="hidden" name="logement_id_statut" value =  <?= $logement["id"] ?> >
-                                        <i class="fa-regular fa-circle-check text-2xl text-red-600 drop-shadow-sm group-hover:text-red-300 group-hover:fa-solid transition-all"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
